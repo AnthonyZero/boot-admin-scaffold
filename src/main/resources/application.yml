@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+    max-connections: 10000
+    min-spare-threads: 30
+spring:
+  application:
+    name: boot-admin-scaffold
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  resources:
+    static-locations: classpath:/static/,classpath:/views/
