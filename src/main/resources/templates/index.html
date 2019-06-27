@@ -2,19 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Index</title>
     <link rel="stylesheet" th:href="@{layui/css/layui.css}">
 </head>
 <body>
 
 </body>
 <script th:src="@{layui/layui.js}"></script>
-<script>
-    layui.use(['layer', 'form'], function(){
-        var layer = layui.layer
-            ,form = layui.form;
-
-        layer.msg('Hello LayUI');
-    });
+<script th:inline="javascript">
+    var ctx = [[@{/}]];
+    console.log(ctx);
+   /* layui.config({
+        base: './febs/',
+        debug: true
+    }).extend({
+        request: 'lay/modules/request',
+        formSelects: 'lay/extends/formSelects-v4.min',
+        treeSelect: 'lay/extends/treeSelect',
+        apexcharts: 'lay/extends/apexcharts.min',
+        eleTree: 'lay/extends/eleTree'
+    }).use(['index'])*/
 </script>
 </html>
