@@ -9,6 +9,9 @@ spring:
     name: boot-admin-scaffold
   profiles:
     active: dev
+  #关闭thymeleaf的缓存，不然在开发过程中修改页面不会立刻生效需要重启，生产可配置为true
+  thymeleaf:
+    cache: false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
