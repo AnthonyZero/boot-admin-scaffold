@@ -33,6 +33,7 @@ public class ViewController {
      */
     @GetMapping("/images/captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException, RedisConnectException {
+        redisService.exists("root");//测试连接
         HttpSession session = request.getSession();
         String code = CaptchaUtil.outPng(110, 34, 4, Captcha.TYPE_NUM_AND_UPPER, request, response);
         String key = SysConstant.CODE_PREFIX + session.getId();
