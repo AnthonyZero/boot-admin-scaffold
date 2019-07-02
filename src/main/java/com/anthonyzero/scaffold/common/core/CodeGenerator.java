@@ -27,11 +27,12 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("anthonyzero");
-        gc.setOpen(false);
+        gc.setOpen(false); //是否打开输出目录
         gc.setBaseResultMap(true); //开启 BaseResultMap
         gc.setBaseColumnList(true); //开启 BaseColumnList
         gc.setServiceName("%sService"); //service 命名方式
         gc.setServiceImplName("%sServiceImpl");
+        /*gc.setFileOverride(true);*/ //是否覆盖已有文件 默认不覆盖 慎用
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -48,7 +49,7 @@ public class CodeGenerator {
         pc.setParent("com.anthonyzero.scaffold");
         mpg.setPackageInfo(pc);
 
-        // 自定义配置
+        // 可注入自定义参数等操作以实现个性化操作
         InjectionConfig cfg = new InjectionConfig() {
             //自定义属性注入:abc
             //在.ftl(或者是.vm)模板中，通过${cfg.abc}获取属性
@@ -73,19 +74,22 @@ public class CodeGenerator {
         });
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
+
+        //TemplateConfig 可自定义代码生成的模板
+        mpg.setTemplate(new TemplateConfig().setController(null).setXml(null)); //不生成controller代码
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setNaming(NamingStrategy.underline_to_camel); //表映射到实体的命名策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setEntityLombokModel(true);
+        strategy.setEntityLombokModel(true);// lombok注解
         /*strategy.setSuperControllerClass("com.baomidou.mybatisplus.samples.generator.common.BaseController"); *///自定义继承的Controller类全称
         // 写于父类中的公共字段
         strategy.setInclude(scanner("表名")); //需要包含的表名
         strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setEntityTableFieldAnnotationEnable(true);
         mpg.setStrategy(strategy);
         // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
