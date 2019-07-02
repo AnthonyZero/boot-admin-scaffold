@@ -9,9 +9,13 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 /**
@@ -19,7 +23,10 @@ import java.util.Scanner;
  */
 public class CodeGenerator {
 
+    private static final String ymlPath = "application-dev.yml"; //yml 数据库配置文件路径
+
     public static void main(String[] args) {
+        Properties properties = getProperties(ymlPath);
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
@@ -37,10 +44,10 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/seed?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("pingjin100");
+        dsc.setUrl(properties.getProperty("spring.datasource.druid.url"));
+        dsc.setDriverName(properties.getProperty("spring.datasource.driver-class-name"));
+        dsc.setUsername(properties.getProperty("spring.datasource.druid.username"));
+        dsc.setPassword(properties.getProperty("spring.datasource.druid.password"));
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -109,5 +116,19 @@ public class CodeGenerator {
             }
         }
         throw new MybatisPlusException("请输入正确的" + tip + "！");
+    }
+
+    /**
+     * 获取配置属性
+     * @param path
+     * @return
+     */
+    public static Properties getProperties(String path) {
+        //1:加载配置文件
+        Resource app = new ClassPathResource(path);
+        YamlPropertiesFactoryBean yamlPropertiesFactoryBean = new YamlPropertiesFactoryBean();
+        yamlPropertiesFactoryBean.setResources(app);
+        Properties properties = yamlPropertiesFactoryBean.getObject();
+        return properties;
     }
 }
