@@ -1,13 +1,14 @@
 package com.anthonyzero.scaffold.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -108,5 +109,15 @@ public class User implements Serializable {
     @TableField("last_login_time")
     private LocalDateTime lastLoginTime;
 
+    /**
+     * 角色ID
+     */
+    @TableField(exist = false)
+    private String roleId;
 
+    /**
+     * 角色名称
+     */
+    @TableField(exist = false)
+    private String roleName;
 }

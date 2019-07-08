@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    /**
+     * 通过用户名查找用户
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    User findByName(String username);
 }

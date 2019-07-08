@@ -25,4 +25,31 @@
         user_id, username, password, nickname, email, mobile, status, sex, avatar, remarks, theme, create_time, modify_time, last_login_time
     </sql>
 
+    <select id="findByName" resultType="user" parameterType="string">
+        SELECT
+            u.user_id userId,
+            u.username,
+            u.nickname,
+            u.email,
+            u.mobile,
+            u.PASSWORD,
+            u.STATUS,
+            u.create_time createTime,
+            u.sex sex,
+            u.last_login_time lastLoginTime,
+            u.modify_time modifyTime,
+            u.remarks,
+            u.avatar,
+            u.theme,
+            GROUP_CONCAT( r.role_id ) roleId,
+            GROUP_CONCAT( r.NAME ) roleName
+        FROM
+            USER u
+            LEFT JOIN user_role ur ON ( u.user_id = ur.user_id )
+            LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE
+            u.username = #{username}
+        GROUP BY
+            u.username
+    </select>
 </mapper>
