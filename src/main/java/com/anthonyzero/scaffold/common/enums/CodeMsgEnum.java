@@ -20,6 +20,8 @@ public enum  CodeMsgEnum {
     MOBILE_ERROR(500213, "手机号码格式错误！"),
     MOBILE_NOT_EXIST(500214, "用户不存在！"),
     PASSWORD_ERROR(500215, "密码错误！"),
+    INCORRECT_PASSWORD(500216, "用户名或密码错误"),
+    LOCKED_ACCOUNT(500217, "账号已被锁定"),
 
 
     ;
