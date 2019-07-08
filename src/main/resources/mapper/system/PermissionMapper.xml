@@ -21,4 +21,18 @@
         permission_id, parent_id, name, url, perms, type, icon, order, create_time, modify_time
     </sql>
 
+    <select id="findUserPermissions" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+            p.*
+        FROM
+            role r
+        JOIN user_role ur ON r.role_id = ur.role_id
+        JOIN user u ON u.user_id = ur.user_id
+        JOIN role_permission rp ON rp.role_id = r.role_id
+        JOIN permission p ON p.permission_id = rp.permission_id
+        WHERE 1 = 1
+        AND u.username = #{username}
+        AND p.perms is not null
+        AND p.perms != ''
+    </select>
 </mapper>

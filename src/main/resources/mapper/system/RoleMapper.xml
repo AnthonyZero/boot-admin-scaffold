@@ -16,4 +16,14 @@
         role_id, name, description, create_time, modify_time
     </sql>
 
+    <select id="findUserRole" resultMap="BaseResultMap" parameterType="string">
+	    SELECT
+            r.*
+        FROM
+            role r
+        JOIN user_role ur ON r.role_id = ur.role_id
+        JOIN user u ON u.user_id = ur.user_id
+        WHERE
+            u.username = #{username}
+    </select>
 </mapper>

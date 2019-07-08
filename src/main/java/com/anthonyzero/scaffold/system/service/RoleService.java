@@ -3,6 +3,8 @@ package com.anthonyzero.scaffold.system.service;
 import com.anthonyzero.scaffold.system.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<Role> {
 
+    /**
+     * 通过用户名查找用户角色
+     *
+     * @param username 用户名
+     * @return 用户角色集合
+     */
+    List<Role> findUserRole(String username);
 }

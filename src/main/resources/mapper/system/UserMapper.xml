@@ -44,9 +44,9 @@
             GROUP_CONCAT( r.role_id ) roleId,
             GROUP_CONCAT( r.NAME ) roleName
         FROM
-            USER u
-            LEFT JOIN user_role ur ON ( u.user_id = ur.user_id )
-            LEFT JOIN role r ON r.role_id = ur.role_id
+            user u
+            left JOIN user_role ur ON u.user_id = ur.user_id
+            left JOIN role r ON r.role_id = ur.role_id
         WHERE
             u.username = #{username}
         GROUP BY
