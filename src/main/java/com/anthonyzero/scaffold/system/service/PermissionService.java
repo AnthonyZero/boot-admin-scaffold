@@ -1,5 +1,6 @@
 package com.anthonyzero.scaffold.system.service;
 
+import com.anthonyzero.scaffold.common.core.MenuTree;
 import com.anthonyzero.scaffold.system.entity.Permission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -22,4 +23,12 @@ public interface PermissionService extends IService<Permission> {
      * @return 用户权限集合
      */
     List<Permission> findUserPermissions(String username);
+
+    /**
+     * 查找用户菜单集合
+     *
+     * @param username 用户名
+     * @return 用户菜单集合
+     */
+    MenuTree<Permission> findUserMenus(String username);
 }

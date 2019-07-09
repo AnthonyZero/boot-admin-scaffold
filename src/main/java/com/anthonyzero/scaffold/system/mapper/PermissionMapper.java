@@ -22,4 +22,12 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @return 用户权限集合
      */
     List<Permission> findUserPermissions(String username);
+
+
+    /**
+     * 查找用户的菜单列表
+     * @param username
+     * @return
+     */
+    List<Permission> findUserMenus(String username);
 }

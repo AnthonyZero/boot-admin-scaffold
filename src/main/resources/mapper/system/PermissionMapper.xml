@@ -35,4 +35,22 @@
         AND p.perms is not null
         AND p.perms != ''
     </select>
+
+
+    <select id="findUserMenus" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+            p.*
+        FROM
+            role_permission rp
+            JOIN permission p ON rp.permission_id = p.permission_id
+            JOIN role r ON rp.ROLE_ID = r.ROLE_ID
+            JOIN user_role ur ON ur.ROLE_ID = r.ROLE_ID
+            JOIN `user` u ON u.USER_ID = ur.USER_ID
+        WHERE
+            1 = 1
+            AND p.TYPE = 0
+            AND u.username = #{username}
+        ORDER BY
+            p.`order`
+    </select>
 </mapper>
