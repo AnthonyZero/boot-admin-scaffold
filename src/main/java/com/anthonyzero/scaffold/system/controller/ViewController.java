@@ -66,27 +66,27 @@ public class ViewController extends BaseController {
 
     @GetMapping(SysConstant.VIEW_PREFIX + "layout")
     public String layout() {
-        return SysConstant.VIEW_PREFIX + "layout";
+        return "views/layout";
     }
 
     @RequestMapping(SysConstant.VIEW_PREFIX + "index")
     public String pageIndex() {
-        return SysConstant.VIEW_PREFIX + "index";
+        return "views/index";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "404")
     public String error404() {
-        return SysConstant.VIEW_PREFIX + "error/404";
+        return  "views/error/404";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "403")
     public String error403() {
-        return SysConstant.VIEW_PREFIX + "error/403";
+        return  "views/error/403";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "500")
     public String error500() {
-        return  SysConstant.VIEW_PREFIX + "error/500";
+        return  "views/error/500";
     }
 
 }

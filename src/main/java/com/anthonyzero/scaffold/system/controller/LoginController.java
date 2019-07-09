@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
