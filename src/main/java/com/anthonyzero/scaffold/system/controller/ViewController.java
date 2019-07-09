@@ -52,41 +52,54 @@ public class ViewController extends BaseController {
     }
 
 
+    /**
+     * 首页
+     * @param model
+     * @return
+     */
     @GetMapping("index")
     public String index(Model model) {
         AuthorizationInfo authorizationInfo = shiroHelper.getCurrentUserAuthorizationInfo();
         User user = super.getCurrentUser();
         user.setPassword("It's a secret");
-        model.addAttribute("user", userService.findByName(user.getUsername())); // 获取实时的用户信息
+        model.addAttribute("user", user);
         model.addAttribute("permissions", authorizationInfo.getStringPermissions());
         model.addAttribute("roles",authorizationInfo.getRoles());
         return "index";
     }
 
 
+    /**
+     * 首页布局
+     * @return
+     */
     @GetMapping(SysConstant.VIEW_PREFIX + "layout")
     public String layout() {
-        return "views/layout";
+        return SysConstant.VIEW_PREFIX + "layout";
     }
 
+    /**
+     * 首页中的 主体部分
+     * @return
+     */
     @RequestMapping(SysConstant.VIEW_PREFIX + "index")
     public String pageIndex() {
-        return "views/index";
+        return SysConstant.VIEW_PREFIX + "index";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "404")
     public String error404() {
-        return  "views/error/404";
+        return  SysConstant.VIEW_PREFIX + "error/404";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "403")
     public String error403() {
-        return  "views/error/403";
+        return  SysConstant.VIEW_PREFIX + "error/403";
     }
 
     @GetMapping(SysConstant.VIEW_PREFIX + "500")
     public String error500() {
-        return  "views/error/500";
+        return  SysConstant.VIEW_PREFIX + "error/500";
     }
 
 }

@@ -120,4 +120,12 @@ public class User implements Serializable {
      */
     @TableField(exist = false)
     private String roleName;
+
+    /**
+     * redis cache使用
+     * @return
+     */
+    public Long getId() {
+        return userId;
+    }
 }
