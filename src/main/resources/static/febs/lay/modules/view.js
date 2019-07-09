@@ -17,7 +17,7 @@ layui
                 ie8:
                     navigator.appName === 'Microsoft Internet Explorer' &&
                     navigator.appVersion.split(';')[1].replace(/[ ]/g, '') === 'MSIE8.0',
-                container: $('#' + conf.container),
+                container: $('#' + conf.container),  //全局index.html 的div
                 containerBody: null
             };
             self.loadBar = loadBar;
