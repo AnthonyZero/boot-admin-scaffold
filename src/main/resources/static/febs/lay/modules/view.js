@@ -159,7 +159,8 @@ layui
                 if (queryIndex !== -1) url = url.slice(0, queryIndex);
                 $.ajax({
                     url:
-                        (url.indexOf(conf.base) === 0 ? '' : conf.views) +
+                        conf.views +
+                        /*(url.indexOf(conf.base) === 0 ? '' : conf.views) + */   //url最开头包含conf.base 就是‘’ + url 否则就是conf.views + url
                         url +
                         conf.engine +
                         '?v=' +

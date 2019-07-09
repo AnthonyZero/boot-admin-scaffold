@@ -168,7 +168,8 @@ layui.extend({
 
         view.tab.del(url);
 
-        view.loadHtml(conf.views + url, function (res) {
+        //popup 这里去掉一个conf.view 前缀
+        view.loadHtml(/*conf.views +*/url, function (res) {
             var htmlElem = $('<div>' + res.html + '</div>');
 
             if (params.title === undefined) {
