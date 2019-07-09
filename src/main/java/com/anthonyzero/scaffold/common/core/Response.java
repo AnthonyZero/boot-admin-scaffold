@@ -2,10 +2,12 @@ package com.anthonyzero.scaffold.common.core;
 
 import com.alibaba.fastjson.JSON;
 import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
+import lombok.Getter;
 
 /**
  * 统一消息返回
  */
+@Getter
 public class Response<T> {
     private static final int DEFAULT_SUCCESS_CODE = 0;
     private static final String DEFAULT_SUCCESS_MESSAGE = "success";
