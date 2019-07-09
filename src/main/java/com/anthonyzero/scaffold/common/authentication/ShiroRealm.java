@@ -11,10 +11,7 @@ import com.anthonyzero.scaffold.system.service.RoleService;
 import com.anthonyzero.scaffold.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -81,11 +78,11 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = userService.findByName(userName);
 
         if (user == null)
-            throw new GlobalException(CodeMsgEnum.INCORRECT_PASSWORD);
+            throw new UnknownAccountException();  //AuthenticationException 的子类 向上转型
         if (!StringUtils.equals(password, user.getPassword()))
-            throw new GlobalException(CodeMsgEnum.INCORRECT_PASSWORD);
+            throw new IncorrectCredentialsException();
         if (SysConstant.STATUS_LOCK.equals(user.getStatus()))
-            throw new GlobalException(CodeMsgEnum.LOCKED_ACCOUNT);
+            throw new LockedAccountException();
         return new SimpleAuthenticationInfo(user, password, getName());
     }
 

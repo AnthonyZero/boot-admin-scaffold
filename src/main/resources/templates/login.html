@@ -135,7 +135,7 @@
             if (loading.is(":visible")) return;
             loading.show();
             $.post(ctx + 'login', data.field, function (r) {  //data.field当前容器的全部表单字段，名值对形式：{name: value}
-                if (r.code === 200) {
+                if (r.code === 0) {
                     location.href = ctx + 'index';
                 } else {
                     layer.msg(r.message);
@@ -156,7 +156,7 @@
             if (loading.is(":visible")) return;
             loading.show();
             $.post(ctx + 'regist', data.field, function (r) {
-                if (r.code === 200) {
+                if (r.code === 0) {
                     layer.msg('注册成功，请登录');
                     loading.hide();
                     $view.find('#login-href').trigger('click');
