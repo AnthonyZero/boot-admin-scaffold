@@ -21,4 +21,8 @@ public class MD5Util {
         String newPassword = new SimpleHash(ALGORITH_NAME, password, ByteSource.Util.bytes(salt), HASH_ITERATIONS).toHex();
         return newPassword;
     }
+
+    public static void main(String[] args) {
+        System.out.println(encrypt("123456","admin"));
+    }
 }
