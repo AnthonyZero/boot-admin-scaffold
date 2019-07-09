@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/febs.css}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/eleTree.css}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/apexcharts.min.css}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/formSelects-v4.css}" media="all">
+    <link rel="icon" th:href="@{febs/images/favicon.ico}" type="image/x-icon"/>
 </head>
 <body>
-
-</body>
+<div id="febs"></div> <!--必须要id为febs 包含所有页面布局-->
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{/}]];
     console.log(ctx);
-   /* layui.config({
+    var currentUser = [[${user}]];
+    currentUser.roleSet = [[${roles}]];
+    currentUser.permissionSet = [[${permissions}]];
+    console.log(currentUser);
+    layui.config({
         base: './febs/',
         debug: true
     }).extend({
@@ -21,6 +34,7 @@
         treeSelect: 'lay/extends/treeSelect',
         apexcharts: 'lay/extends/apexcharts.min',
         eleTree: 'lay/extends/eleTree'
-    }).use(['index'])*/
+    }).use(['index'])
 </script>
+</body>
 </html>

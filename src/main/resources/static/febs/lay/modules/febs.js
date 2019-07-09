@@ -15,7 +15,8 @@ layui.extend({
     var self = {};
     var windowWidth = $(window).width();
 
-    conf.viewTabs = currentUser.isTab === '1';
+    /*conf.viewTabs = currentUser.isTab === '1';*/
+    conf.viewTabs =  '1';
     self.route = layui.router();
     self.view = view;
     self.api = layui.api;
@@ -617,7 +618,7 @@ layui.extend({
     };
 
     function resolveResponse(r, f) {
-        if (r.code === 200) {
+        if (r.code === 0) {
             f(r) && (f)();
         } else if (r.code === 401) {
             self.modal.info('登录失效', '登录已失效，请重新登录', function () {

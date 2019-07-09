@@ -1,4 +1,5 @@
 <div class="layui-layout layui-layout-admin" id="febs-layout">
+    <!-- 顶部用户内容 -->
     <div class="layui-header layui-anim febs-anim-down" id="app-header">
         <script type="text/html"
                 template
@@ -30,6 +31,7 @@
         </script>
     </div>
 
+    <!-- tabs页 -->
     <div class="febs-tabs-hidden">
         <script type="text/html" id="TPL-app-tabsmenu" template>
             {{# if(layui.conf.viewTabs){ }}
@@ -60,7 +62,7 @@
         <div class="layui-side-scroll">
             <div class="layui-logo" style="cursor: pointer">
                 <img data-th-src="@{febs/images/logo.png}">
-                <span>FEBS 权限系统</span>
+                <span>CRM 权限系统</span>
             </div>
             <script
                     type="text/html"
@@ -97,7 +99,7 @@
             </script>
         </div>
     </div>
-    <!-- 主体内容 -->
+    <!-- 我们自己页面的主体内容 -->
     <div class="layui-body" id="febs-body"></div>
 </div>
 <script data-th-inline="javascript" type="text/javascript">

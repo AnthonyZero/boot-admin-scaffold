@@ -10,11 +10,17 @@ import com.anthonyzero.scaffold.system.service.RedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LoginController extends BaseController {
@@ -44,5 +50,28 @@ public class LoginController extends BaseController {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         super.login(token);
         return Response.success();
+    }
+
+
+    @GetMapping("index/{username}")
+    public Response index(@PathVariable String username) {
+        // 更新登录时间
+       /* this.userService.updateLoginTime(username);*/
+        Map<String, Object> data = new HashMap<>();
+        // 获取系统访问记录
+        /*Long totalVisitCount = this.loginLogService.findTotalVisitCount();
+        data.put("totalVisitCount", totalVisitCount);
+        Long todayVisitCount = this.loginLogService.findTodayVisitCount();
+        data.put("todayVisitCount", todayVisitCount);
+        Long todayIp = this.loginLogService.findTodayIp();
+        data.put("todayIp", todayIp);
+        // 获取近期系统访问记录
+        List<Map<String, Object>> lastSevenVisitCount = this.loginLogService.findLastSevenDaysVisitCount(null);
+        data.put("lastSevenVisitCount", lastSevenVisitCount);
+        User param = new User();
+        param.setUsername(username);
+        List<Map<String, Object>> lastSevenUserVisitCount = this.loginLogService.findLastSevenDaysVisitCount(param);
+        data.put("lastSevenUserVisitCount", lastSevenUserVisitCount);*/
+        return Response.success(data);
     }
 }
