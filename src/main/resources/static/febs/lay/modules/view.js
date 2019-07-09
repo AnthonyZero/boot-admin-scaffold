@@ -151,7 +151,7 @@ layui
                 }, params);
                 self.modal.base(msg, params);
             };
-
+            //加载页面 tab页面 展示 重要
             self.loadHtml = function (url, callback) {
                 url = url || conf.entry;
                 loadBar.start();
