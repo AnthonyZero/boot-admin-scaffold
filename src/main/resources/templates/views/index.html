@@ -156,10 +156,10 @@
                 '周末要不要去看电影？'
             ];
             var index = Math.floor((Math.random() * welcomeArr.length));
-            var welcomeMessage = time + '，<a id="febs-index-user">' + currentUser.username + '</a>，' + welcomeArr[index];
-            $view.find('#today-ip').text(data.todayIp).end()
-                .find('#today-visit-count').text(data.todayVisitCount).end()
-                .find('#total-visit-count').text(data.totalVisitCount).end()
+            var welcomeMessage = time + '，<a id="febs-index-user">' + currentUser.nickname + '</a>，' + welcomeArr[index];
+            $view.find('#today-ip').text(data.todayIp).end() //今日IP数
+                .find('#today-visit-count').text(data.todayVisitCount).end() //今日总访问数
+                .find('#total-visit-count').text(data.totalVisitCount).end()  //系统总访问数
                 .find('#user-dept').text(currentUser.deptName ? currentUser.deptName : '暂无所属部门').end()
                 .find('#user-role').text(currentUser.roleName ? currentUser.roleName : '暂无角色').end()
                 .find('#last-login-time').text(currentUser.lastLoginTime ? currentUser.lastLoginTime : '第一次访问系统').end()
@@ -169,7 +169,7 @@
             var currentTime = new Date().getTime();
             var yourVisitCount = [];
             var totalVisitCount = [];
-            var lastTenDays = [
+            var lastTenDays = [ //最近10天
                 util.toDateString(new Date(currentTime - 1000 * 9 * 86400), 'MM-dd'),
                 util.toDateString(new Date(currentTime - 1000 * 8 * 86400), 'MM-dd'),
                 util.toDateString(new Date(currentTime - 1000 * 7 * 86400), 'MM-dd'),
@@ -185,7 +185,7 @@
 
             layui.each(lastTenDays, function (k, i) {
                 var contain = false;
-                layui.each(data.lastSevenUserVisitCount, function (key, item) {
+                layui.each(data.lastTenUserVisitCount, function (key, item) {
                     if (i === item.days) {
                         yourVisitCount.push(item.count);
                         contain = true;
@@ -193,7 +193,7 @@
                 });
                 if (!contain) yourVisitCount.push(0);
                 contain = false;
-                layui.each(data.lastSevenVisitCount, function (key, item) {
+                layui.each(data.lastTenVisitCount, function (key, item) {
                     if (i === item.days) {
                         totalVisitCount.push(item.count);
                         contain = true;

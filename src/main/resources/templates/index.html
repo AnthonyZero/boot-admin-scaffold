@@ -20,7 +20,6 @@
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{/}]];
-    console.log(ctx);
     var currentUser = [[${user}]];
     currentUser.roleSet = [[${roles}]];
     currentUser.permissionSet = [[${permissions}]];
@@ -35,7 +34,6 @@
         apexcharts: 'lay/extends/apexcharts.min',
         eleTree: 'lay/extends/eleTree'
     }).use(['index'])
-    console.log(layui.cache);
 </script>
 </body>
 </html>
