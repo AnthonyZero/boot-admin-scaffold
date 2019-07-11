@@ -120,4 +120,13 @@ public class ViewController extends BaseController {
         return SysConstant.VIEW_PREFIX + "system/user/avatar";
     }
 
+    /**
+     * 个人信息修改页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "user/profile/update")
+    public String profileUpdate() {
+        return SysConstant.VIEW_PREFIX + "system/user/profileUpdate";
+    }
+
 }

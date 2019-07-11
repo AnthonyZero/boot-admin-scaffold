@@ -20,7 +20,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     /**
-     * 修改系统主题
+     * 修改用户系统主题
      * @param theme
      * @return
      */
@@ -42,6 +42,18 @@ public class UserController extends BaseController {
     public Response updateAvatar(@PathVariable String image) {
         User user = new User();
         user.setAvatar(image);
+        user.setModifyTime(LocalDateTime.now());
+        userService.update(user, new LambdaUpdateWrapper<User>().eq(User::getUserId, getUserId()));
+        return Response.success();
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @PostMapping("profile/update")
+    public Response updateProfileInfo(User user) {
         user.setModifyTime(LocalDateTime.now());
         userService.update(user, new LambdaUpdateWrapper<User>().eq(User::getUserId, getUserId()));
         return Response.success();
