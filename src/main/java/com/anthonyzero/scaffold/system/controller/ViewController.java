@@ -129,4 +129,14 @@ public class ViewController extends BaseController {
         return SysConstant.VIEW_PREFIX + "system/user/profileUpdate";
     }
 
+
+    /**
+     * 密码修改页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "password/update")
+    public String passwordUpdate() {
+        return SysConstant.VIEW_PREFIX + "system/user/passwordUpdate";
+    }
+
 }

@@ -618,6 +618,11 @@ layui.extend({
         return true;
     };
 
+    /**
+     * 统一处理响应
+     * @param r
+     * @param f
+     */
     function resolveResponse(r, f) {
         if (r.code === 0) {
             f(r) && (f)();
