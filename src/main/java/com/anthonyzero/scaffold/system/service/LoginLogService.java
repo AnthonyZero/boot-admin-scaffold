@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LoginLogService extends IService<LoginLog> {
 
+    /**
+     * 保存登录日志
+     * @param loginLog
+     */
+    void saveLoginLog(LoginLog loginLog);
 }

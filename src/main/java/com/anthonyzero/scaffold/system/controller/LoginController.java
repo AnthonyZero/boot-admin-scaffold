@@ -6,6 +6,8 @@ import com.anthonyzero.scaffold.common.core.SysConstant;
 import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
 import com.anthonyzero.scaffold.common.exception.RedisConnectException;
 import com.anthonyzero.scaffold.common.utils.MD5Util;
+import com.anthonyzero.scaffold.system.entity.LoginLog;
+import com.anthonyzero.scaffold.system.service.LoginLogService;
 import com.anthonyzero.scaffold.system.service.RedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -25,6 +27,9 @@ public class LoginController extends BaseController {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private LoginLogService loginLogService;
 
     /**
      * 登录
@@ -47,6 +52,11 @@ public class LoginController extends BaseController {
         password = MD5Util.encrypt(password, username);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         super.login(token);
+        //保存登录日志
+        LoginLog loginLog = new LoginLog();
+        loginLog.setUsername(username);
+        loginLog.setupOsBrowserInfo(); //设置os browser
+        loginLogService.saveLoginLog(loginLog);
         return Response.success();
     }
 
