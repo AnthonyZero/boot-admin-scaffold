@@ -75,7 +75,7 @@ public class LoginController extends BaseController {
         Long todayVisitCount = loginLogService.getTodayVisitCount();
         data.put("todayVisitCount", todayVisitCount);
         Long todayIpCount = loginLogService.getTodayIpCount();
-        data.put("todayIp", todayIpCount);
+        data.put("todayIpCount", todayIpCount);
         // 获取近期十天系统访问记录
         List<Map<String, Object>> lastTenVisitCount = loginLogService.getLastDaysVisitCount(null, 10);
         data.put("lastTenVisitCount", lastTenVisitCount);
