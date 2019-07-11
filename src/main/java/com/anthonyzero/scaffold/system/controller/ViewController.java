@@ -10,6 +10,7 @@ import com.anthonyzero.scaffold.system.service.RedisService;
 import com.anthonyzero.scaffold.system.service.UserService;
 import com.wf.captcha.Captcha;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,12 @@ public class ViewController extends BaseController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
-        return "login";
+        if(request.getHeader("X-Requested-With") != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            //ajax请求 session失效或过期的时候会发生 ->会跳转配置的登录页  通过控制抛出异常让前端resolveResponse捕获完成跳转
+            throw new ExpiredSessionException();
+        } else {
+            return "login";
+        }
     }
 
     /**

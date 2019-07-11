@@ -6,6 +6,11 @@ import lombok.Getter;
 @Getter
 public enum  CodeMsgEnum {
 
+    //用作session失效或过期
+    UNAUTHORIZED(401, "Unauthorized"),
+    FORBIDDEN(403, "Forbidden"), //无操作权限
+    BAD_REQUEST(400, "Bad Request"),
+
     //通用异常 5001xx
     SERVER_ERROR(500100, "服务端异常！"),
     BIND_ERROR(500101, "参数校验异常：%s!"),
