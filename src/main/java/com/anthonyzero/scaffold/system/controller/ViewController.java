@@ -102,4 +102,22 @@ public class ViewController extends BaseController {
         return  SysConstant.VIEW_PREFIX + "error/500";
     }
 
+    /**
+     * 个人中心页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "user/profile")
+    public String userProfile() {
+        return SysConstant.VIEW_PREFIX + "system/user/userProfile";
+    }
+
+    /**
+     * 头像选择页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "user/avatar")
+    public String userAvatar() {
+        return SysConstant.VIEW_PREFIX + "system/user/avatar";
+    }
+
 }
