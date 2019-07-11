@@ -43,3 +43,6 @@ spring:
           max-idle: 10     # 连接池中的最大空闲连接
           max-wait: 1000   # 连接池最大阻塞等待时间
       timeout: 6000
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
