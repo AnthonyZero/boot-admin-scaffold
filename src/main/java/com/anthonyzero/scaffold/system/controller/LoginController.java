@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -60,26 +61,26 @@ public class LoginController extends BaseController {
         return Response.success();
     }
 
-
+    /**
+     * 获取首页 部分数据
+     * @param username
+     * @return
+     */
     @GetMapping("index/{username}")
     public Response index(@PathVariable String username) {
-        // 更新登录时间
-       /* this.userService.updateLoginTime(username);*/
         Map<String, Object> data = new HashMap<>();
         // 获取系统访问记录
-        /*Long totalVisitCount = this.loginLogService.findTotalVisitCount();
+        Long totalVisitCount = loginLogService.getTotalVisitCount();
         data.put("totalVisitCount", totalVisitCount);
-        Long todayVisitCount = this.loginLogService.findTodayVisitCount();
+        Long todayVisitCount = loginLogService.getTodayVisitCount();
         data.put("todayVisitCount", todayVisitCount);
-        Long todayIp = this.loginLogService.findTodayIp();
-        data.put("todayIp", todayIp);
-        // 获取近期系统访问记录
-        List<Map<String, Object>> lastSevenVisitCount = this.loginLogService.findLastSevenDaysVisitCount(null);
-        data.put("lastSevenVisitCount", lastSevenVisitCount);
-        User param = new User();
-        param.setUsername(username);
-        List<Map<String, Object>> lastSevenUserVisitCount = this.loginLogService.findLastSevenDaysVisitCount(param);
-        data.put("lastSevenUserVisitCount", lastSevenUserVisitCount);*/
+        Long todayIpCount = loginLogService.getTodayIpCount();
+        data.put("todayIp", todayIpCount);
+        // 获取近期十天系统访问记录
+        List<Map<String, Object>> lastTenVisitCount = loginLogService.getLastDaysVisitCount(null, 10);
+        data.put("lastTenVisitCount", lastTenVisitCount);
+        List<Map<String, Object>> lastTenUserVisitCount = loginLogService.getLastDaysVisitCount(username, 10);
+        data.put("lastTenUserVisitCount", lastTenUserVisitCount);
         return Response.success(data);
     }
 }
