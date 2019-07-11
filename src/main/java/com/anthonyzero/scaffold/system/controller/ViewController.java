@@ -60,7 +60,7 @@ public class ViewController extends BaseController {
     @GetMapping("index")
     public String index(Model model) {
         AuthorizationInfo authorizationInfo = shiroHelper.getCurrentUserAuthorizationInfo();
-        User user = super.getCurrentUser();
+        User user = userService.findByName(getCurrentUser().getUsername()); //获取实时用户信息
         user.setPassword("It's a secret");
         model.addAttribute("user", user);
         model.addAttribute("permissions", authorizationInfo.getStringPermissions());

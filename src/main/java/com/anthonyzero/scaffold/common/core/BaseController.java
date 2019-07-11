@@ -23,6 +23,10 @@ public class BaseController {
         return (User) getSubject().getPrincipal();
     }
 
+    protected Long getUserId() {
+        return getCurrentUser().getUserId();
+    }
+
     protected Session getSession() {
         return getSubject().getSession();
     }
