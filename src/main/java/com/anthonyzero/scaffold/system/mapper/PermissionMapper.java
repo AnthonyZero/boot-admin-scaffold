@@ -30,4 +30,11 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @return
      */
     List<Permission> findUserMenus(String username);
+
+
+    /**
+     * 递归删除权限
+     * @param permissionId
+     */
+    void deletePermissions(String permissionId);
 }

@@ -39,4 +39,10 @@ public interface PermissionService extends IService<Permission> {
      * @return
      */
     MenuTree<Permission> findMenus(String menuName);
+
+    /**
+     * 删除权限 权限及子权限 用户角色权限及子权限
+     * @param permissionIds
+     */
+    void deletePermissions(String permissionIds);
 }

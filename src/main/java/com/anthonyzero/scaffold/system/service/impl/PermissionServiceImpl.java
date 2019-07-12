@@ -1,14 +1,19 @@
 package com.anthonyzero.scaffold.system.service.impl;
 
+import com.anthonyzero.scaffold.common.authentication.ShiroRealm;
 import com.anthonyzero.scaffold.common.core.MenuTree;
 import com.anthonyzero.scaffold.common.utils.TreeUtil;
 import com.anthonyzero.scaffold.system.entity.Permission;
 import com.anthonyzero.scaffold.system.mapper.PermissionMapper;
+import com.anthonyzero.scaffold.system.mapper.RolePermissionMapper;
 import com.anthonyzero.scaffold.system.service.PermissionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,12 @@ import java.util.List;
  */
 @Service
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
+
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
+
+    @Autowired
+    private ShiroRealm shiroRealm;
 
     @Override
     public List<Permission> findUserPermissions(String username) {
@@ -47,6 +58,19 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         List<MenuTree<Permission>> trees = this.convertMenus(menus);
 
         return TreeUtil.buildMenuTree(trees);
+    }
+
+    @Override
+    @Transactional
+    public void deletePermissions(String permissionIds) {
+        String[] permissionIdsArray = permissionIds.split(StringPool.COMMA);
+        for (String permissionId : permissionIdsArray) {
+            // 递归删除这些菜单/按钮
+            baseMapper.deletePermissions(permissionId);
+            rolePermissionMapper.deleteRolePermissions(permissionId);
+        }
+
+        shiroRealm.clearCache();
     }
 
     private List<MenuTree<Permission>> convertMenus(List<Permission> menus) {
