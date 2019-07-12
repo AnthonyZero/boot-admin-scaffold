@@ -160,12 +160,12 @@
                         febs.alert.warn('请勾选需要删除的菜单或按钮');
                         return;
                     }
-                    var menuIds = [];
+                    var permissionIds = [];
                     layui.each(checked, function (key, item) {
-                        menuIds.push(item.id)
+                        permissionIds.push(item.id)
                     });
                     febs.modal.confirm('提示', '当您点击确定按钮后，这些记录将会被彻底删除，如果其包含子记录，也将一并删除！', function () {
-                        febs.get(ctx + 'menu/delete/' + menuIds.join(','), null, function () {
+                        febs.get(ctx + 'menu/delete/' + permissionIds.join(','), null, function () {
                             febs.alert.success('删除成功！');
                             reloadMenuTree();
                             reset();
@@ -180,11 +180,11 @@
             },  //下拉选择配置
             options: [{
                 name: 'add',
-                title: '新增菜单',
+                title: '新增权限',
                 perms: 'menu:add'
             }, {
                 name: 'delete',
-                title: '删除',
+                title: '删除权限',
                 perms: 'menu:delete'  //代表需要该权限 显示
             }, {
                 name: 'export',
@@ -286,7 +286,7 @@
                 checkStrictly: true,
                 renderAfterExpand: false,
                 request: {
-                    name: "title",
+                    name: "title",  //选择响应数据各字段
                     key: "id",
                     children: "childs",
                     checked: "checked",
