@@ -10,6 +10,7 @@ import com.anthonyzero.scaffold.system.service.RedisService;
 import com.anthonyzero.scaffold.system.service.UserService;
 import com.wf.captcha.Captcha;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -143,6 +144,17 @@ public class ViewController extends BaseController {
     @GetMapping(SysConstant.VIEW_PREFIX + "password/update")
     public String passwordUpdate() {
         return SysConstant.VIEW_PREFIX + "system/user/passwordUpdate";
+    }
+
+
+    /**
+     * 菜单管理页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/menu")
+    @RequiresPermissions("menu:view")
+    public String systemMenu() {
+        return SysConstant.VIEW_PREFIX + "system/menu/menu";
     }
 
 }

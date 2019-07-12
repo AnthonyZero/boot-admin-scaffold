@@ -25,10 +25,18 @@ public interface PermissionService extends IService<Permission> {
     List<Permission> findUserPermissions(String username);
 
     /**
-     * 查找用户菜单集合
+     * 查找用户菜单集合 不含按钮
      *
      * @param username 用户名
      * @return 用户菜单集合
      */
     MenuTree<Permission> findUserMenus(String username);
+
+
+    /**
+     * 查找所有的菜单/按钮 （树形结构）
+     * @param menuName
+     * @return
+     */
+    MenuTree<Permission> findMenus(String menuName);
 }

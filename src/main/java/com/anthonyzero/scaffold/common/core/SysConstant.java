@@ -12,4 +12,9 @@ public class SysConstant {
     public static final String STATUS_VALID = "1";
     // 锁定
     public static final String STATUS_LOCK = "0";
+
+    // 菜单
+    public static final String TYPE_MENU = "0";
+    // 按钮
+    public static final String TYPE_BUTTON = "1";
 }

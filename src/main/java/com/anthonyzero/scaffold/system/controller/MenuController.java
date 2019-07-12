@@ -1,8 +1,10 @@
 package com.anthonyzero.scaffold.system.controller;
 
+import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.MenuTree;
 import com.anthonyzero.scaffold.common.core.Response;
+import com.anthonyzero.scaffold.common.core.SysConstant;
 import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
 import com.anthonyzero.scaffold.common.exception.GlobalException;
 import com.anthonyzero.scaffold.system.entity.Permission;
@@ -10,11 +12,11 @@ import com.anthonyzero.scaffold.system.entity.User;
 import com.anthonyzero.scaffold.system.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -25,7 +27,7 @@ public class MenuController extends BaseController {
     private PermissionService permissionService;
 
     /**
-     * 获取自己的菜单树
+     * 获取自己的菜单树 不含按钮
      * @param username
      * @return
      */
@@ -36,5 +38,32 @@ public class MenuController extends BaseController {
             throw new GlobalException(CodeMsgEnum.REQUEST_ILLEGAL);
         MenuTree<Permission> userMenus = permissionService.findUserMenus(username);
         return Response.success(userMenus);
+    }
+
+    /**
+     * 获取整个菜单树 包含按钮
+     * @param menuName 菜单名称查询条件
+     * @return
+     */
+    @GetMapping("tree")
+    public Response getMenusTree(String menuName) {
+        MenuTree<Permission> menus = permissionService.findMenus(menuName);
+        return Response.success(menus.getChilds());
+    }
+
+
+    @SysLog("新增菜单/按钮")
+    @PostMapping("add")
+    @RequiresPermissions("menu:add")
+    public Response addMenu(Permission permission) {
+        permission.setCreateTime(LocalDateTime.now());
+        if (permission.getParentId() == null)
+            permission.setParentId(0L);
+        if (SysConstant.TYPE_BUTTON.equals(permission.getType())) {
+            permission.setUrl(null);
+            permission.setIcon(null);
+        }
+        permissionService.save(permission);
+        return Response.success();
     }
 }
