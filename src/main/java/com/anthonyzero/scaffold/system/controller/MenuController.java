@@ -48,14 +48,19 @@ public class MenuController extends BaseController {
     @GetMapping("tree")
     public Response getMenusTree(String menuName) {
         MenuTree<Permission> menus = permissionService.findMenus(menuName);
-        return Response.success(menus.getChilds());
+        return Response.success(menus.getChilds()); //数组 从第一级开始
     }
 
 
+    /**
+     * 添加权限
+     * @param permission
+     * @return
+     */
     @SysLog("新增菜单/按钮")
     @PostMapping("add")
     @RequiresPermissions("menu:add")
-    public Response addMenu(Permission permission) {
+    public Response addPermission(Permission permission) {
         permission.setCreateTime(LocalDateTime.now());
         if (permission.getParentId() == null)
             permission.setParentId(0L);
@@ -64,6 +69,20 @@ public class MenuController extends BaseController {
             permission.setIcon(null);
         }
         permissionService.save(permission);
+        return Response.success();
+    }
+
+
+    /**
+     * 删除权限
+     * @param permissionIds
+     * @return
+     */
+    @SysLog("删除菜单/按钮")
+    @GetMapping("delete/{permissionIds}")
+    @RequiresPermissions("menu:delete")
+    public Response deleteMenu(@PathVariable String permissionIds) {
+        permissionService.deletePermissions(permissionIds);
         return Response.success();
     }
 }
