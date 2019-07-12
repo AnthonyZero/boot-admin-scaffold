@@ -12,7 +12,7 @@ public enum  CodeMsgEnum {
     BAD_REQUEST(400, "Bad Request"),
 
     //通用异常 5001xx
-    SERVER_ERROR(500100, "服务端异常！"),
+    SERVER_ERROR(500100, "服务端异常！请联系管理员"),
     BIND_ERROR(500101, "参数校验异常：%s!"),
     REQUEST_ILLEGAL(500102, "请求非法！"),
     ACCESS_LIMIT_REACHED(500103, "访问太频繁！"),

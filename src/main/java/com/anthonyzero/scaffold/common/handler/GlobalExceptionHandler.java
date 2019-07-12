@@ -8,13 +8,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 异常统一处理
+ * 异常处理
  */
 @Slf4j
 @ControllerAdvice
@@ -60,5 +61,16 @@ public class GlobalExceptionHandler {
     public Response handleExpiredSessionException(ExpiredSessionException e) {
         log.error("ExpiredSessionException", e);
         return Response.error(CodeMsgEnum.UNAUTHORIZED);
+    }
+
+    /**
+     * 无操作权限
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public Response handleUnauthorizedException(UnauthorizedException e) {
+        log.error("UnauthorizedException", e);
+        return Response.error(CodeMsgEnum.FORBIDDEN);
     }
 }
