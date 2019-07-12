@@ -69,8 +69,8 @@ public class Permission implements Serializable {
     /**
      * 排序值
      */
-    @TableField("order")
-    private Integer order;
+    @TableField("order_num")
+    private Integer orderNum;
 
     /**
      * 添加时间

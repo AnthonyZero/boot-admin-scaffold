@@ -11,14 +11,14 @@
         <result column="perms" property="perms" />
         <result column="type" property="type" />
         <result column="icon" property="icon" />
-        <result column="order" property="order" />
+        <result column="order_num" property="orderNum" />
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        permission_id, parent_id, name, url, perms, type, icon, order, create_time, modify_time
+        permission_id, parent_id, name, url, perms, type, icon, order_num, create_time, modify_time
     </sql>
 
     <select id="findUserPermissions" resultMap="BaseResultMap" parameterType="string">
@@ -51,6 +51,6 @@
             AND p.TYPE = 0
             AND u.username = #{username}
         ORDER BY
-            p.`order`
+            p.order_num
     </select>
 </mapper>
