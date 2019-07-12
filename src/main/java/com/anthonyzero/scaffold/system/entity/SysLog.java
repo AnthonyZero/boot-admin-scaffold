@@ -47,7 +47,7 @@ public class SysLog implements Serializable {
      * 耗时
      */
     @TableField("time")
-    private BigDecimal time;
+    private Long time;
 
     /**
      * 方法
