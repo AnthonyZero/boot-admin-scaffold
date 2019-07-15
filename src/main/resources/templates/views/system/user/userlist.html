@@ -56,16 +56,22 @@
                                 </div>
                             </div>
                             <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
-                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query" title="搜索">
                                     <i class="layui-icon">&#xe848;</i>
                                 </div>
-                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset" title="刷新">
                                     <i class="layui-icon">&#xe79b;</i>
                                 </div>
-                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
-                                     shiro:hasAnyPermissions="user:add,user:update,user:password:reset,user:export">
-                                    <i class="layui-icon">&#xe875;</i>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="addUser" shiro:hasPermission="user:add" title="添加用户">
+                                    <i class="layui-icon">&#xe61f;</i>
                                 </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="deleteUser" shiro:hasPermission="user:delete" title="删除用户">
+                                    <i class="layui-icon">&#xe7f9;</i>
+                                </div>
+                                <!--<div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
+                                     shiro:hasAnyPermissions="user:add,user:delete,user:password:reset,user:export">
+                                    <i class="layui-icon">&#xe875;</i>
+                                </div>-->
                             </div>
                         </div>
                     </form>
@@ -98,11 +104,12 @@
     <span shiro:lacksPermission="user:view,user:update,user:delete">
         <span class="layui-badge-dot febs-bg-orange"></span> 无权限
     </span>
-    <a lay-event="detail" shiro:hasPermission="user:view"><i
+    <a lay-event="detail" shiro:hasPermission="user:view" title="查看信息"><i
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
-    <a lay-event="edit" shiro:hasPermission="user:update"><i
-            class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
-    <a lay-event="del" shiro:hasPermission="user:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+    <a lay-event="edit" shiro:hasPermission="user:update" title="修改信息"><i
+            class="layui-icon febs-edit-area febs-blue">&#xe631;</i></a>
+    <a lay-event="del" shiro:hasPermission="user:delete" title="删除"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+    <a lay-event="reset" shiro:hasPermission="user:password:reset" title="重置密码"><i class="layui-icon febs-edit-area febs-green">&#xe673;</i></a>
 </script>
 <script data-th-inline="none" type="text/javascript">
     layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect'], function () {
@@ -116,6 +123,8 @@
             $view = $('#febs-user'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
+            $addUser = $view.find("#addUser"),
+            $deleteUser = $view.find("#deleteUser"),
             $searchForm = $view.find('form'),
             sortObject = {field: 'createTime', type: 'desc'},
             tableIns;
@@ -131,7 +140,7 @@
             trigger: 'click'
         });
 
-        //下拉菜单
+        //下拉菜单 去掉不用
         dropdown.render({
             elem: $view.find('.action-more'),
             click: function (name, elem, event) {
@@ -212,8 +221,8 @@
 
         //表格每行数据操作
         table.on('tool(userTable)', function (obj) {
-            var data = obj.data,
-                layEvent = obj.event;
+            var data = obj.data, //每行数据
+                layEvent = obj.event;  //定义的事件名称
             if (layEvent === 'detail') {
                 febs.modal.view('用户信息', 'system/user/detail/' + data.username, {
                     area: $(window).width() <= 750 ? '95%' : '660px'
@@ -243,7 +252,7 @@
             //{field: "createTime", type: "desc"}
             sortObject = obj;
             tableIns.reload({
-                initSort: obj,
+                initSort: obj,  //表格sort 字段初始化显示
                 where: $.extend(getQueryParams(), { //合并参数
                     field: obj.field,
                     order: obj.type
@@ -252,16 +261,38 @@
         });
 
         $query.on('click', function () {
+            console.log(sortObject);
             var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
-            tableIns.reload({where: params, page: {curr: 1}});
+            tableIns.reload({
+                where: params,
+                page: {
+                    curr: 1
+                }
+            });
         });
 
         $reset.on('click', function () {
             $searchForm[0].reset();
             /*treeSelect.revokeNode('dept');*/
             sortObject.type = 'null';
-            tableIns.reload({where: getQueryParams(), page: {curr: 1}, initSort: sortObject});
+            tableIns.reload({
+                where: getQueryParams(),
+                page: {
+                    curr: 1
+                },
+                initSort: sortObject
+            });
         });
+        
+        //添加用户
+        $addUser.on('click', function () {
+            
+        })
+        
+        //删除所选用户
+        $deleteUser.on('click', function () {
+
+        })
 
         /**
          * 初始化表格
