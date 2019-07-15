@@ -538,7 +538,7 @@ layui.extend({
             },
             parseData: function (res) {
                 return {
-                    "code": res.code === 200 ? 0 : res.code,
+                    "code": res.code === 0 ? 0 : res.code,
                     "count": res.data.total,
                     "data": res.data.rows
                 }

@@ -26,8 +26,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 分页查询用户
-     * @param page
-     * @param user
+     * @param page  传递参数MB Page 即自动分页,必须放在第一位
+     * @param user  搜索参数
      * @return
      */
     IPage<User> selectPageUser(Page page, @Param("user") User user);

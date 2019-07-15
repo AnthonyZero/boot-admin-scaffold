@@ -1,6 +1,8 @@
 package com.anthonyzero.scaffold.system.service;
 
+import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.system.entity.User;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -20,4 +22,12 @@ public interface UserService extends IService<User> {
      * @return 用户
      */
     User findByName(String username);
+
+    /**
+     * 用户列表分页查询
+     * @param user
+     * @param request
+     * @return
+     */
+    IPage<User> pageUser(User user, RequestQuery request);
 }

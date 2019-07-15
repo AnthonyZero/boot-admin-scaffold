@@ -167,4 +167,14 @@ public class ViewController extends BaseController {
         return SysConstant.VIEW_PREFIX + "system/menu/icon";
     }
 
+
+    /**
+     * 用户管理列表
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/user")
+    @RequiresPermissions("user:view")
+    public String systemUser() {
+        return SysConstant.VIEW_PREFIX + "system/user/userlist";
+    }
 }

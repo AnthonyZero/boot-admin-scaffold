@@ -1,6 +1,7 @@
 package com.anthonyzero.scaffold.system.controller;
 
 import com.anthonyzero.scaffold.common.core.BaseController;
+import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
 import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
 import com.anthonyzero.scaffold.common.exception.GlobalException;
@@ -10,10 +11,12 @@ import com.anthonyzero.scaffold.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -79,5 +82,19 @@ public class UserController extends BaseController {
         user.setModifyTime(LocalDateTime.now());
         userService.update(user, new LambdaUpdateWrapper<User>().eq(User::getUserId, getUserId()));
         return Response.success();
+    }
+
+
+    /**
+     * 用户列表
+     * @param user
+     * @param request
+     * @return
+     */
+    @GetMapping("list")
+    @RequiresPermissions("user:view")
+    public Response userList(User user, RequestQuery request) {
+        Map<String, Object> dataTable = getDataTable(userService.pageUser(user, request));
+        return Response.success(dataTable);
     }
 }
