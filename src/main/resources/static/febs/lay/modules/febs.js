@@ -16,7 +16,7 @@ layui.extend({
     var windowWidth = $(window).width();
 
     /*conf.viewTabs = currentUser.isTab === '1';*/
-    conf.viewTabs =  '1';
+    conf.viewTabs =  true; //开启tab 展开 记得static下文件修改后 刷新浏览器缓存生效
     self.route = layui.router();
     self.view = view;
     self.api = layui.api;

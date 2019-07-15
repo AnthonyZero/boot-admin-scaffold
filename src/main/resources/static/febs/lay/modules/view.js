@@ -11,7 +11,7 @@ layui
             var laytpl = layui.laytpl;
             var conf = layui.conf;
             /*conf.viewTabs = currentUser.isTab === '1';*/
-            conf.viewTabs =  '1';
+            conf.viewTabs =  true; //开启tab 展开 记得static下文件 修改刷新浏览器缓存生效
             var loadBar = layui.loadBar;
             var self = {
                 ie8:
