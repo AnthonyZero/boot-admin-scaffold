@@ -2,6 +2,9 @@ package com.anthonyzero.scaffold.system.mapper;
 
 import com.anthonyzero.scaffold.system.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -19,4 +22,13 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User findByName(String username);
+
+
+    /**
+     * 分页查询用户
+     * @param page
+     * @param user
+     * @return
+     */
+    IPage<User> selectPageUser(Page page, @Param("user") User user);
 }

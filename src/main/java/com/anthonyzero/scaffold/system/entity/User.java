@@ -130,4 +130,8 @@ public class User implements Serializable {
     public Long getId() {
         return userId;
     }
+
+    //用于查询字段
+    private String createTimeFrom;
+    private String createTimeTo;
 }
