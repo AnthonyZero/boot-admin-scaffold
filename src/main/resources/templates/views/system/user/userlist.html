@@ -8,9 +8,9 @@
                             <div class="layui-col-md10">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">用户名</label>
+                                        <label class="layui-form-label layui-form-label-sm">昵称</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="username" autocomplete="off" class="layui-input">
+                                            <input type="text" name="nickname" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -117,7 +117,7 @@
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
             $searchForm = $view.find('form'),
-            sortObject = {field: 'createTime', type: null},
+            sortObject = {field: 'createTime', type: 'desc'},
             tableIns;
 
         form.render();
@@ -238,11 +238,13 @@
             }
         });
 
+        // 对应表格sort为true的 点击事件   obj 包含字段名称 和 排序方法desc asc
         table.on('sort(userTable)', function (obj) {
+            //{field: "createTime", type: "desc"}
             sortObject = obj;
             tableIns.reload({
                 initSort: obj,
-                where: $.extend(getQueryParams(), {
+                where: $.extend(getQueryParams(), { //合并参数
                     field: obj.field,
                     order: obj.type
                 })
@@ -293,13 +295,12 @@
                 createTimeTo = createTime.split(' - ')[1];
             }
             return {
-                createTimeFrom: createTimeFrom,
-                createTimeTo: createTimeTo,
-                username: $searchForm.find('input[name="username"]').val().trim(),
+                createTimeFrom: createTimeFrom, //开始时间begine
+                createTimeTo: createTimeTo,  //结束时间end
+                nickname: $searchForm.find('input[name="nickname"]').val().trim(),
                 status: $searchForm.find("select[name='status']").val(),
                 sex: $searchForm.find("select[name='sex']").val(),
                 mobile: $searchForm.find("input[name='mobile']").val().trim(),
-                deptId: $searchForm.find("input[name='dept']").val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }
