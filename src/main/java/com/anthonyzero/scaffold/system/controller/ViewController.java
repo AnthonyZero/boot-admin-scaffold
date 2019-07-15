@@ -157,4 +157,14 @@ public class ViewController extends BaseController {
         return SysConstant.VIEW_PREFIX + "system/menu/menu";
     }
 
+
+    /**
+     * 选择菜单图标icon页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "other/icon")
+    public String menusIcon() {
+        return SysConstant.VIEW_PREFIX + "system/menu/icon";
+    }
+
 }

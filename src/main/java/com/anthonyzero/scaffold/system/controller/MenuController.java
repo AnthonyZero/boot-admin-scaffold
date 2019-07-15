@@ -1,6 +1,7 @@
 package com.anthonyzero.scaffold.system.controller;
 
 import com.anthonyzero.scaffold.common.annotation.SysLog;
+import com.anthonyzero.scaffold.common.authentication.ShiroRealm;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.MenuTree;
 import com.anthonyzero.scaffold.common.core.Response;
@@ -25,6 +26,9 @@ public class MenuController extends BaseController {
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private ShiroRealm shiroRealm;
 
     /**
      * 获取自己的菜单树 不含按钮
@@ -83,6 +87,28 @@ public class MenuController extends BaseController {
     @RequiresPermissions("menu:delete")
     public Response deleteMenu(@PathVariable String permissionIds) {
         permissionService.deletePermissions(permissionIds);
+        return Response.success();
+    }
+
+
+    /**
+     * 修改菜单/按钮
+     * @param permission
+     * @return
+     */
+    @SysLog("修改菜单/按钮")
+    @PostMapping("update")
+    @RequiresPermissions("menu:update")
+    public Response updateMenu(Permission permission) {
+        permission.setModifyTime(LocalDateTime.now());
+        if (permission.getParentId() == null)
+            permission.setParentId(0L);
+        if (SysConstant.TYPE_BUTTON.equals(permission.getType())) {
+            permission.setUrl(null);
+            permission.setIcon(null);
+        }
+        permissionService.updateById(permission);
+        shiroRealm.clearCache();
         return Response.success();
     }
 }
