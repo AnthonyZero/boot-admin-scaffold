@@ -46,10 +46,9 @@ public interface LoginLogService extends IService<LoginLog> {
 
 
     /**
-     * 获取最近几天访问数
+     * 获取最近10天访问数
      * @param username
-     * @param interval
      * @return
      */
-    List<Map<String, Object>> getLastDaysVisitCount(String username, Integer interval);
+    List<Map<String, Object>> getLastDaysVisitCount(String username);
 }

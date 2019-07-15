@@ -34,7 +34,7 @@
             date_format( t.login_time, '%m-%d' ) days,
             count( 1 ) count
         FROM
-            ( SELECT * FROM login_log WHERE date( login_time ) > date_sub( curdate( ), INTERVAL #{interval} DAY ) ) t
+            ( SELECT * FROM login_log WHERE date( login_time ) > date_sub(curdate(), INTERVAL 10 DAY ) ) t
         WHERE
             1 = 1
         <if test="username != null and username != ''">

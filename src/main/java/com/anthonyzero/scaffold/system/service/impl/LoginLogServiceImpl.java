@@ -62,8 +62,8 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     @Override
-    public List<Map<String, Object>> getLastDaysVisitCount(String username, Integer interval) {
-        return baseMapper.getLastDaysVisitCount(username, interval);
+    public List<Map<String, Object>> getLastDaysVisitCount(String username) {
+        return baseMapper.getLastDaysVisitCount(username);
     }
 
 

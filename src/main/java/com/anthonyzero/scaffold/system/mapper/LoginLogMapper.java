@@ -41,11 +41,11 @@ public interface LoginLogMapper extends BaseMapper<LoginLog> {
 
 
     /**
-     * 获取系统近几天来的访问记录
+     * 获取系统近10天来的访问记录
      *
      * @param userName 用户账号 可选
-     * @return 系统近几天来的访问记录
+     * @return 系统近10天来的访问记录
      */
-    List<Map<String, Object>> getLastDaysVisitCount(@Param("username") String userName,@Param("interval") Integer interval);
+    List<Map<String, Object>> getLastDaysVisitCount(@Param("username") String userName);
 
 }
