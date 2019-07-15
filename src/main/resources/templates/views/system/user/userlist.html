@@ -136,6 +136,7 @@
             elem: $view.find('.action-more'),
             click: function (name, elem, event) {
                 var checkStatus = table.checkStatus('userTable');
+                console.log(checkStatus);
                 if (name === 'add') {
                     febs.modal.open('新增用户', 'system/user/add', {
                         btn: ['提交', '重置'],
@@ -194,11 +195,11 @@
                 name: 'reset',
                 title: '密码重置',
                 perms: 'user:password:reset'
-            }, {
+            }/*, {
                 name: 'export',
                 title: '导出Excel',
                 perms: 'user:export'
-            }]
+            }*/]
         });
 
         /*treeSelect.render({
@@ -209,6 +210,7 @@
             search: false
         });*/
 
+        //表格每行数据操作
         table.on('tool(userTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;

@@ -25,7 +25,12 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    // 性别男
+    public static final String SEX_MALE = "0";
+    // 性别女
+    public static final String SEX_FEMALE = "1";
+    // 性别保密
+    public static final String SEX_UNKNOW = "2";
     /**
      * 用户ID
      */
@@ -132,6 +137,8 @@ public class User implements Serializable {
     }
 
     //用于查询字段
+    @TableField(exist = false)
     private String createTimeFrom;
+    @TableField(exist = false)
     private String createTimeTo;
 }

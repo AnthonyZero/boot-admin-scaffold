@@ -16,12 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class ViewController extends BaseController {
@@ -176,5 +179,20 @@ public class ViewController extends BaseController {
     @RequiresPermissions("user:view")
     public String systemUser() {
         return SysConstant.VIEW_PREFIX + "system/user/userlist";
+    }
+
+
+
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/user/detail/{username}")
+    @RequiresPermissions("user:view")
+    public String systemUserDetail(@PathVariable String username, Model model) {
+        User user = userService.findByName(username);
+        model.addAttribute("user", user);
+        model.addAttribute("lastLoginTime", user.getLastLoginTime().format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN)));
+        String ssex = user.getSex();
+        if (User.SEX_MALE.equals(ssex)) user.setSex("男");
+        else if (User.SEX_FEMALE.equals(ssex)) user.setSex("女");
+        else user.setSex("保密");
+        return SysConstant.VIEW_PREFIX + "system/user/userDetail";
     }
 }

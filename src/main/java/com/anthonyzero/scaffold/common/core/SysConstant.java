@@ -21,4 +21,6 @@ public class SysConstant {
     public static final String TYPE_MENU = "0";
     // 按钮
     public static final String TYPE_BUTTON = "1";
+
+    public static final String FULL_TIME_SPLIT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 }
