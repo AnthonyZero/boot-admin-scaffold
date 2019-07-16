@@ -22,4 +22,11 @@ public interface RoleService extends IService<Role> {
      * @return 用户角色集合
      */
     List<Role> findUserRole(String username);
+
+    /**
+     * 查找所有角色
+     * @param role
+     * @return
+     */
+    List<Role> findRoles(Role role);
 }

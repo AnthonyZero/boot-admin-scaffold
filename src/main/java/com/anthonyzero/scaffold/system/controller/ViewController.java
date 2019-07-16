@@ -182,7 +182,12 @@ public class ViewController extends BaseController {
     }
 
 
-
+    /**
+     * 查看用户信息
+     * @param username
+     * @param model
+     * @return
+     */
     @GetMapping(SysConstant.VIEW_PREFIX + "system/user/detail/{username}")
     @RequiresPermissions("user:view")
     public String systemUserDetail(@PathVariable String username, Model model) {
@@ -194,5 +199,20 @@ public class ViewController extends BaseController {
         else if (User.SEX_FEMALE.equals(ssex)) user.setSex("女");
         else user.setSex("保密");
         return SysConstant.VIEW_PREFIX + "system/user/userDetail";
+    }
+
+    /**
+     * 修改用户信息页面
+     * @param username
+     * @param model
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/user/update/{username}")
+    @RequiresPermissions("user:update")
+    public String systemUserUpdate(@PathVariable String username, Model model) {
+        User user = userService.findByName(username);
+        model.addAttribute("user", user);
+        model.addAttribute("lastLoginTime", user.getLastLoginTime().format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN)));
+        return SysConstant.VIEW_PREFIX + "system/user/userUpdate";
     }
 }
