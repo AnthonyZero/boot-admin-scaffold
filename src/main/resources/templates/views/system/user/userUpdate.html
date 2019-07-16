@@ -99,7 +99,7 @@
             $view = $('#user-update'),
             validate = layui.validate;
 
-        form.verify(validate);
+        form.verify(validate); //提交时候 验证合法性 比如在validata.js中有验证username是否存在 就可以在加lay-verify=username（自定义） 进行验证
         form.render();
 
         initUserValue();
@@ -117,6 +117,9 @@
             }
         });*/
 
+        /**
+         * 选择框 选择角色
+         */
         formSelects.config('user-update-role', {
             searchUrl: ctx + 'role',
             response: {

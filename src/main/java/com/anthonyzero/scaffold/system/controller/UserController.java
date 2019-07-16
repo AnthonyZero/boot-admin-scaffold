@@ -97,4 +97,15 @@ public class UserController extends BaseController {
         Map<String, Object> dataTable = getDataTable(userService.pageUser(user, request));
         return Response.success(dataTable);
     }
+
+    /**
+     * 检查用户名是否已存在
+     * @param username
+     * @param userId
+     * @return
+     */
+    @GetMapping("check/{username}")
+    public boolean checkUserName(@PathVariable String username, String userId) {
+        return this.userService.findByName(username) == null || StringUtils.isNotBlank(userId);
+    }
 }
