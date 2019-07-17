@@ -3,6 +3,7 @@ package com.anthonyzero.scaffold.system.service.impl;
 import com.anthonyzero.scaffold.common.authentication.ShiroRealm;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.SysConstant;
+import com.anthonyzero.scaffold.common.utils.MD5Util;
 import com.anthonyzero.scaffold.common.utils.SortUtil;
 import com.anthonyzero.scaffold.system.entity.User;
 import com.anthonyzero.scaffold.system.entity.UserRole;
@@ -68,6 +69,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             shiroRealm.clearCache();
         }
 
+    }
+
+    @Override
+    public void resetPassword(String[] usernames) {
+        Arrays.stream(usernames).forEach(username -> {
+            User user = new User();
+            user.setPassword(MD5Util.encrypt(User.DEFAULT_PASSWORD, username));
+            this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        });
     }
 
     /**

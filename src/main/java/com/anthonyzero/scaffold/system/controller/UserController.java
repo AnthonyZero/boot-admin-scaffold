@@ -10,6 +10,7 @@ import com.anthonyzero.scaffold.common.utils.MD5Util;
 import com.anthonyzero.scaffold.system.entity.User;
 import com.anthonyzero.scaffold.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -123,6 +124,21 @@ public class UserController extends BaseController {
         if (user.getUserId() == null)
             throw new GlobalException(CodeMsgEnum.REQUEST_ILLEGAL);
         this.userService.updateUser(user);
+        return Response.success();
+    }
+
+
+    /**
+     * 重置用户密码
+     * @param usernames
+     * @return
+     */
+    @SysLog("重置用户密码")
+    @PostMapping("password/reset/{usernames}")
+    @RequiresPermissions("user:password:reset")
+    public Response resetPassword(@PathVariable String usernames) {
+        String[] usernameArr = usernames.split(StringPool.COMMA);
+        this.userService.resetPassword(usernameArr);
         return Response.success();
     }
 }

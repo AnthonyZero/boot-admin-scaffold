@@ -245,6 +245,13 @@
                     }
                 });
             }
+            if (layEvent === 'reset') {
+                var usernames = [];
+                usernames.push(data.username);
+                febs.post(ctx + 'user/password/reset/' + usernames.join(','), null, function () {
+                    febs.alert.success('所选用户密码已重置为123456');
+                });
+            }
         });
 
         // 对应表格sort为true的 点击事件   obj 包含字段名称 和 排序方法desc asc
