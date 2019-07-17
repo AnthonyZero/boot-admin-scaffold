@@ -30,4 +30,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     IPage<User> pageUser(User user, RequestQuery request);
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    void updateUser(User user);
 }

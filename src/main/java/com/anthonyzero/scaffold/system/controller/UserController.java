@@ -1,5 +1,6 @@
 package com.anthonyzero.scaffold.system.controller;
 
+import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
@@ -107,5 +108,21 @@ public class UserController extends BaseController {
     @GetMapping("check/{username}")
     public boolean checkUserName(@PathVariable String username, String userId) {
         return this.userService.findByName(username) == null || StringUtils.isNotBlank(userId);
+    }
+
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @SysLog("修改用户信息")
+    @PostMapping("update")
+    @RequiresPermissions("user:update")
+    public Response updateUser(User user) {
+        if (user.getUserId() == null)
+            throw new GlobalException(CodeMsgEnum.REQUEST_ILLEGAL);
+        this.userService.updateUser(user);
+        return Response.success();
     }
 }
