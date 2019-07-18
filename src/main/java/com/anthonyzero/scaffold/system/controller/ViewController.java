@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Controller
 public class ViewController extends BaseController {
@@ -193,7 +193,8 @@ public class ViewController extends BaseController {
     public String systemUserDetail(@PathVariable String username, Model model) {
         User user = userService.findByName(username);
         model.addAttribute("user", user);
-        model.addAttribute("lastLoginTime", user.getLastLoginTime().format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN)));
+        model.addAttribute("lastLoginTime",
+                Optional.ofNullable(user.getLastLoginTime()).map(u -> u.format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN))).orElse(""));
         String ssex = user.getSex();
         if (User.SEX_MALE.equals(ssex)) user.setSex("男");
         else if (User.SEX_FEMALE.equals(ssex)) user.setSex("女");
@@ -212,7 +213,8 @@ public class ViewController extends BaseController {
     public String systemUserUpdate(@PathVariable String username, Model model) {
         User user = userService.findByName(username);
         model.addAttribute("user", user);
-        model.addAttribute("lastLoginTime", user.getLastLoginTime().format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN)));
+        model.addAttribute("lastLoginTime",
+                Optional.ofNullable(user.getLastLoginTime()).map(u -> u.format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN))).orElse(""));
         return SysConstant.VIEW_PREFIX + "system/user/userUpdate";
     }
 
