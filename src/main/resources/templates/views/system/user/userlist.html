@@ -101,7 +101,7 @@
     <span>{{ sex.title }}</span>
 </script>
 <script type="text/html" id="user-option">
-    <span shiro:lacksPermission="user:view,user:update,user:delete">
+    <span shiro:lacksPermission="user:view,user:update,user:delete,user:password:reset">
         <span class="layui-badge-dot febs-bg-orange"></span> 无权限
     </span>
     <a lay-event="detail" shiro:hasPermission="user:view" title="查看信息"><i
@@ -141,7 +141,7 @@
         });
 
         //下拉菜单 去掉不用
-        dropdown.render({
+        /*dropdown.render({
             elem: $view.find('.action-more'),
             click: function (name, elem, event) {
                 var checkStatus = table.checkStatus('userTable');
@@ -204,12 +204,12 @@
                 name: 'reset',
                 title: '密码重置',
                 perms: 'user:password:reset'
-            }/*, {
+            }/!*, {
                 name: 'export',
                 title: '导出Excel',
                 perms: 'user:export'
-            }*/]
-        });
+            }*!/]
+        });*/
 
         /*treeSelect.render({
             elem: $view.find('#dept'),
@@ -308,7 +308,18 @@
         
         //删除所选用户
         $deleteUser.on('click', function () {
-
+            var checkStatus = table.checkStatus('userTable');
+            if (!checkStatus.data.length) {
+                febs.alert.warn('请选择需要删除的用户');
+            } else {
+                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
+                    var userIds = [];
+                    layui.each(checkStatus.data, function (key, item) {
+                        userIds.push(item.userId)
+                    });
+                    deleteUsers(userIds.join(','));
+                });
+            }
         })
 
         /**

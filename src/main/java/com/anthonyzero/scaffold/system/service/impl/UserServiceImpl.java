@@ -95,6 +95,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         setUserRoles(user, roles);
     }
 
+    @Override
+    @Transactional
+    public void deleteUsers(String[] userIds) {
+        List<String> list = Arrays.asList(userIds);
+        // 删除用户
+        this.removeByIds(list);
+        userRoleService.deleteUserRolesByUserId(list);
+    }
+
     /**
      * 保存用户角色信息
      * @param user

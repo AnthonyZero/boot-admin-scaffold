@@ -155,4 +155,19 @@ public class UserController extends BaseController {
         userService.createUser(user);
         return Response.success();
     }
+
+
+    /**
+     * 删除用户
+     * @param userIds
+     * @return
+     */
+    @SysLog("删除用户")
+    @GetMapping("delete/{userIds}")
+    @RequiresPermissions("user:delete")
+    public Response deleteUsers(@PathVariable String userIds) {
+        String[] ids = userIds.split(StringPool.COMMA);
+        this.userService.deleteUsers(ids);
+        return Response.success();
+    }
 }

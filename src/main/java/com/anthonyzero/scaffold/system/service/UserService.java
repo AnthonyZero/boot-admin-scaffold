@@ -49,4 +49,10 @@ public interface UserService extends IService<User> {
      * @param user
      */
     void createUser(User user);
+
+    /**
+     * 删除用户
+     * @param userIds
+     */
+    void deleteUsers(String[] userIds);
 }
