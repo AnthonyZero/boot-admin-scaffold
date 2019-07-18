@@ -51,14 +51,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label febs-form-item-require">角色名称：</label>
                             <div class="layui-input-block">
-                                <input type="text" name="roleName" autocomplete="off" class="layui-input" minlength="2"
-                                       maxlength="10" lay-verify="range">
+                                <input type="text" name="name" autocomplete="off" class="layui-input" minlength="2"
+                                       maxlength="20" lay-verify="range">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">角色描述：</label>
                             <div class="layui-input-block">
-                                <textarea name="remark" maxlength="50" class="layui-textarea"></textarea>
+                                <textarea name="description" maxlength="50" class="layui-textarea"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -187,11 +187,11 @@
                 $header.text('修改角色');
                 form.val("role-form", {
                     "roleId": data.roleId,
-                    "roleName": data.roleName,
-                    "remark": data.remark
+                    "name": data.name,
+                    "description": data.description
                 });
-                if (data.menuIds) {
-                    menuTree.setChecked(data.menuIds.split(','), true);
+                if (data.permissionIds) {
+                    menuTree.setChecked(data.permissionIds.split(','), true);
                 } else {
                     menuTree.setChecked([], true);
                 }
