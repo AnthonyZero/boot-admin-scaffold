@@ -43,4 +43,10 @@ public interface UserService extends IService<User> {
      * @param usernames
      */
     void resetPassword(String[] usernames);
+
+    /**
+     * 创建用户
+     * @param user
+     */
+    void createUser(User user);
 }

@@ -70,7 +70,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注：</label>
             <div class="layui-input-block">
-                <textarea name="description" maxlength="100" class="layui-textarea"></textarea>
+                <textarea name="remarks" maxlength="100" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item febs-hide">
@@ -127,7 +127,7 @@
         });
 
         form.on('submit(user-add-form-submit)', function (data) {
-            febs.post(ctx + 'user', data.field, function () {
+            febs.post(ctx + 'user/add', data.field, function () {
                 layer.closeAll();
                 febs.alert.success('新增用户成功，初始密码为 123456');
                 $('#febs-user').find('#query').click();

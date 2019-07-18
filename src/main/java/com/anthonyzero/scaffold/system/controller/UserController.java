@@ -141,4 +141,18 @@ public class UserController extends BaseController {
         this.userService.resetPassword(usernameArr);
         return Response.success();
     }
+
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    @SysLog("新增用户")
+    @PostMapping("add")
+    @RequiresPermissions("user:add")
+    public Response addUser(User user) {
+        userService.createUser(user);
+        return Response.success();
+    }
 }

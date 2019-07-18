@@ -22,5 +22,10 @@ public class SysConstant {
     // 按钮
     public static final String TYPE_BUTTON = "1";
 
+    // 黑色主题
+    public static final String THEME_BLACK = "black";
+    // 白色主题
+    public static final String THEME_WHITE = "white";
+
     public static final String FULL_TIME_SPLIT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 }

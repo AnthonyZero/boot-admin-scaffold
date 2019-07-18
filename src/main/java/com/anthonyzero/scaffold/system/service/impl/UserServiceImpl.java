@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         user.setUsername(null); //为空的不修改
         user.setModifyTime(LocalDateTime.now());
@@ -72,12 +74,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @Transactional
     public void resetPassword(String[] usernames) {
         Arrays.stream(usernames).forEach(username -> {
             User user = new User();
             user.setPassword(MD5Util.encrypt(User.DEFAULT_PASSWORD, username));
             this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
         });
+    }
+
+    @Override
+    public void createUser(User user) {
+        user.setCreateTime(LocalDateTime.now());
+        user.setAvatar(User.DEFAULT_AVATAR);
+        user.setTheme(SysConstant.THEME_BLACK);
+        user.setPassword(MD5Util.encrypt(User.DEFAULT_PASSWORD, user.getUsername()));
+        save(user);
+        // 保存用户角色
+        String[] roles = user.getRoleId().split(StringPool.COMMA);
+        setUserRoles(user, roles);
     }
 
     /**
