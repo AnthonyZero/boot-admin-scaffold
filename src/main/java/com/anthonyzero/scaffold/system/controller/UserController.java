@@ -101,7 +101,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 检查用户名是否已存在
+     * 检查用户名是否不存在
      * @param username
      * @param userId
      * @return

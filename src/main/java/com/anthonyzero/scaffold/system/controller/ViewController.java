@@ -215,4 +215,15 @@ public class ViewController extends BaseController {
         model.addAttribute("lastLoginTime", user.getLastLoginTime().format(DateTimeFormatter.ofPattern(SysConstant.FULL_TIME_SPLIT_PATTERN)));
         return SysConstant.VIEW_PREFIX + "system/user/userUpdate";
     }
+
+
+    /**
+     * 添加用户页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/user/add")
+    @RequiresPermissions("user:add")
+    public String systemUserAdd() {
+        return SysConstant.VIEW_PREFIX + "system/user/userAdd";
+    }
 }

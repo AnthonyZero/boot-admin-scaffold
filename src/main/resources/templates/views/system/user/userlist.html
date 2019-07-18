@@ -293,7 +293,17 @@
         
         //添加用户
         $addUser.on('click', function () {
-            
+            febs.modal.open('新增用户', 'system/user/add', {
+                btn: ['提交', '重置'],
+                area: $(window).width() <= 750 ? '95%' : '50%',
+                yes: function (index, layero) {
+                    $('#user-add').find('#submit').trigger('click');
+                },
+                btn2: function () {
+                    $('#user-add').find('#reset').trigger('click');
+                    return false;
+                }
+            });
         })
         
         //删除所选用户
