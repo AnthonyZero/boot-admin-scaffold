@@ -99,6 +99,8 @@
             $view = $('#febs-role'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
+            $addRole = $view.find("#addRole"),
+            $deleteRole = $view.find("#deleteRole"),
             $submit = $view.find('#submit'),
             $searchForm = $view.find('#role-table-form'),
             $header = $view.find('#form-header'),
@@ -205,14 +207,28 @@
 
         $query.on('click', function () {
             resetRoleForm();
-            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+            tableIns.reload({
+                where: getQueryParams(),
+                page: {
+                    curr: 1
+                }
+            });
         });
 
         $reset.on('click', function () {
             resetRoleForm();
             $searchForm[0].reset();
-            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+            tableIns.reload({
+                where: getQueryParams(),
+                page: {
+                    curr: 1
+                }
+            });
         });
+        //添加角色
+        $addRole.on('click', function () {
+            resetRoleForm();
+        })
 
         $submit.on('click', function () {
             $view.find('#submit-form').trigger('click');
@@ -240,21 +256,22 @@
             };
         }
 
+        //重置表单数据
         function resetRoleForm() {
-            $view.find('#reset-form').trigger('click');
+            $view.find('#reset-form').trigger('click'); //重置表单
             $header.text('新增角色');
             menuTree.setChecked([], true);
-            menuTree.unExpandAll();
+            menuTree.unExpandAll(); //不展开树
         }
 
         form.on('submit(role-form-submit)', function (data) {
             var selected = menuTree.getChecked(false, true);
-            var menuIds = [];
+            var permissionIds = [];
             layui.each(selected, function (key, item) {
-                menuIds.push(item.id)
+                permissionIds.push(item.id) //菜单id
             });
-            data.field.menuIds = menuIds.join(',');
-            if (!menuIds.length) {
+            data.field.permissionIds = permissionIds.join(','); //赋值 多个permissionIds
+            if (!permissionIds.length) {
                 febs.modal.confirm('提示', '当前角色未授予任何权限，是否继续？', function () {
                     addOrUpdateRole(data.field);
                 });
@@ -278,7 +295,7 @@
                     $query.trigger('click');
                 });
             } else {
-                febs.post(ctx + 'role', data, function () {
+                febs.post(ctx + 'role/add', data, function () {
                     febs.alert.success('新增角色成功');
                     $query.trigger('click');
                 });

@@ -1,5 +1,6 @@
 package com.anthonyzero.scaffold.system.controller;
 
+import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,5 +48,18 @@ public class RoleController extends BaseController {
         IPage<Role> roleIPage = roleService.pageRoles(role, query);
         Map<String, Object> dataTable = getDataTable(roleIPage);
         return Response.success(dataTable);
+    }
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    @SysLog("新增角色")
+    @PostMapping("add")
+    @RequiresPermissions("role:add")
+    public Response createRole(Role role) {
+        roleService.createRole(role);
+        return Response.success();
     }
 }

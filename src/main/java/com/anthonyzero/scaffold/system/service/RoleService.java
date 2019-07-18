@@ -40,4 +40,11 @@ public interface RoleService extends IService<Role> {
      * @return IPage
      */
     IPage<Role> pageRoles(Role role, RequestQuery query);
+
+
+    /**
+     * 新增角色
+     * @param role
+     */
+    void createRole(Role role);
 }
