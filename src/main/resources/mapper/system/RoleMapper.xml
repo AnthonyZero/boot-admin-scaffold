@@ -26,4 +26,24 @@
         WHERE
             u.username = #{username}
     </select>
+
+    <select id="pageRoles" parameterType="role" resultType="role">
+        SELECT
+            r.role_id roleId,
+            r.NAME,
+            r.description,
+            r.create_time createTime,
+            r.modify_time modifyTime,
+            GROUP_CONCAT( rp.permission_id ) permissionIds
+        FROM
+            role r
+            LEFT JOIN role_permission rp ON r.role_id = rp.role_id
+        WHERE
+            1 = 1
+        <if test="role.name != null and role.name != ''">
+            AND r.name like CONCAT('%',#{role.name},'%')
+        </if>
+        GROUP BY
+            r.role_id
+    </select>
 </mapper>

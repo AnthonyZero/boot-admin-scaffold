@@ -1,14 +1,19 @@
 package com.anthonyzero.scaffold.system.controller;
 
 import com.anthonyzero.scaffold.common.core.BaseController;
+import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
 import com.anthonyzero.scaffold.system.entity.Role;
 import com.anthonyzero.scaffold.system.service.RoleService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -26,5 +31,20 @@ public class RoleController extends BaseController {
     @GetMapping
     public Response getAllRoles(Role role) {
         return Response.success(roleService.findRoles(role));
+    }
+
+
+    /**
+     * 角色列表分页
+     * @param role
+     * @param query
+     * @return
+     */
+    @GetMapping("list")
+    @RequiresPermissions("role:view")
+    public Response roleList(Role role, RequestQuery query) {
+        IPage<Role> roleIPage = roleService.pageRoles(role, query);
+        Map<String, Object> dataTable = getDataTable(roleIPage);
+        return Response.success(dataTable);
     }
 }

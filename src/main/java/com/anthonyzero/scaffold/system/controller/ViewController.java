@@ -228,4 +228,15 @@ public class ViewController extends BaseController {
     public String systemUserAdd() {
         return SysConstant.VIEW_PREFIX + "system/user/userAdd";
     }
+
+
+    /**
+     * 角色管理页面
+     * @return
+     */
+    @GetMapping(SysConstant.VIEW_PREFIX + "system/role")
+    @RequiresPermissions("role:view")
+    public String systemRole() {
+        return SysConstant.VIEW_PREFIX + "system/role/role";
+    }
 }

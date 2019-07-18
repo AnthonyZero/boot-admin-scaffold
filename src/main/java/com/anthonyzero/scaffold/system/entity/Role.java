@@ -54,5 +54,8 @@ public class Role implements Serializable {
     @TableField("modify_time")
     private LocalDateTime modifyTime;
 
-
+    /**
+     * 角色对应的权限 id
+     */
+    private transient String permissionIds;
 }

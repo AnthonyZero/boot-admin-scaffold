@@ -1,9 +1,14 @@
 package com.anthonyzero.scaffold.system.service.impl;
 
+import com.anthonyzero.scaffold.common.core.RequestQuery;
+import com.anthonyzero.scaffold.common.core.SysConstant;
+import com.anthonyzero.scaffold.common.utils.SortUtil;
 import com.anthonyzero.scaffold.system.entity.Role;
 import com.anthonyzero.scaffold.system.mapper.RoleMapper;
 import com.anthonyzero.scaffold.system.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -32,5 +37,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         if (StringUtils.isNotBlank(role.getName()))
             queryWrapper.lambda().like(Role::getName, role.getName());
         return baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public IPage<Role> pageRoles(Role role, RequestQuery query) {
+        Page<Role> page = new Page<>(query.getPageNum(), query.getPageSize());
+        SortUtil.handlePageSort(query, page, "createTime", SysConstant.ORDER_DESC);
+        return baseMapper.pageRoles(page, role);
     }
 }

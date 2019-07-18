@@ -1,6 +1,8 @@
 package com.anthonyzero.scaffold.system.service;
 
+import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.system.entity.Role;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -29,4 +31,13 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     List<Role> findRoles(Role role);
+
+    /**
+     * 查找所有角色（分页）
+     *
+     * @param role    角色对象（用于传递查询条件）
+     * @param query query
+     * @return IPage
+     */
+    IPage<Role> pageRoles(Role role, RequestQuery query);
 }
