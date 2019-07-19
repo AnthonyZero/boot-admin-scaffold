@@ -47,4 +47,12 @@ public interface RoleService extends IService<Role> {
      * @param role
      */
     void createRole(Role role);
+
+
+    /**
+     * 修改角色
+     *
+     * @param role 待修改的角色
+     */
+    void updateRole(Role role);
 }

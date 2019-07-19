@@ -62,4 +62,18 @@ public class RoleController extends BaseController {
         roleService.createRole(role);
         return Response.success();
     }
+
+
+    /**
+     * 修改角色
+     * @param role
+     * @return
+     */
+    @SysLog("修改角色")
+    @PostMapping("update")
+    @RequiresPermissions("role:update")
+    public Response updateRole(Role role) {
+        roleService.updateRole(role);
+        return Response.success();
+    }
 }

@@ -65,6 +65,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         saveRolePermissions(role);
     }
 
+    @Override
+    public void updateRole(Role role) {
+        role.setModifyTime(LocalDateTime.now());
+        updateById(role);
+        List<String> roleIdList = new ArrayList<>();
+        roleIdList.add(String.valueOf(role.getRoleId()));
+        rolePermissionService.deleteRolePermsByRoleId(roleIdList); //通过角色ID删除 该角色权限
+        saveRolePermissions(role); //重新保存新角色权限
+    }
+
 
     private void saveRolePermissions(Role role) {
         if (StringUtils.isNotBlank(role.getPermissionIds())) {
