@@ -166,6 +166,9 @@ public class UserController extends BaseController {
     @GetMapping("delete/{userIds}")
     @RequiresPermissions("user:delete")
     public Response deleteUsers(@PathVariable String userIds) {
+        if (StringUtils.isBlank(userIds)) {
+            return Response.error(CodeMsgEnum.PARAMETER_ERROR);
+        }
         String[] ids = userIds.split(StringPool.COMMA);
         this.userService.deleteUsers(ids);
         return Response.success();

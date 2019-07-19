@@ -55,4 +55,12 @@ public interface RoleService extends IService<Role> {
      * @param role 待修改的角色
      */
     void updateRole(Role role);
+
+
+    /**
+     * 删除角色
+     *
+     * @param roleIds 待删除角色的 id集合
+     */
+    void deleteRoles(String roleIds);
 }

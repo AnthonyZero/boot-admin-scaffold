@@ -8,6 +8,7 @@ import com.anthonyzero.scaffold.system.entity.RolePermission;
 import com.anthonyzero.scaffold.system.mapper.RoleMapper;
 import com.anthonyzero.scaffold.system.service.RolePermissionService;
 import com.anthonyzero.scaffold.system.service.RoleService;
+import com.anthonyzero.scaffold.system.service.UserRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -36,6 +37,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     private RolePermissionService rolePermissionService;
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Override
     public List<Role> findUserRole(String username) {
@@ -66,6 +69,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
+    @Transactional
     public void updateRole(Role role) {
         role.setModifyTime(LocalDateTime.now());
         updateById(role);
@@ -73,6 +77,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         roleIdList.add(String.valueOf(role.getRoleId()));
         rolePermissionService.deleteRolePermsByRoleId(roleIdList); //通过角色ID删除 该角色权限
         saveRolePermissions(role); //重新保存新角色权限
+    }
+
+    @Override
+    @Transactional
+    public void deleteRoles(String roleIds) {
+        List<String> list = Arrays.asList(roleIds.split(StringPool.COMMA));
+        baseMapper.delete(new QueryWrapper<Role>().lambda().in(Role::getRoleId, list));
+
+        rolePermissionService.deleteRolePermsByRoleId(list);
+        userRoleService.deleteUserRolesByRoleId(list);
     }
 
 

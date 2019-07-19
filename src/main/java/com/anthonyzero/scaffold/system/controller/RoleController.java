@@ -4,16 +4,15 @@ import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
+import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
 import com.anthonyzero.scaffold.system.entity.Role;
 import com.anthonyzero.scaffold.system.service.RoleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -74,6 +73,23 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:update")
     public Response updateRole(Role role) {
         roleService.updateRole(role);
+        return Response.success();
+    }
+
+
+    /**
+     * 删除角色
+     * @param roleIds
+     * @return
+     */
+    @SysLog("删除角色")
+    @GetMapping("delete/{roleIds}")
+    @RequiresPermissions("role:delete")
+    public Response deleteRoles(@PathVariable String roleIds) {
+        if (StringUtils.isBlank(roleIds)) {
+            return Response.error(CodeMsgEnum.PARAMETER_ERROR);
+        }
+        roleService.deleteRoles(roleIds);
         return Response.success();
     }
 }

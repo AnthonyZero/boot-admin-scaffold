@@ -27,4 +27,10 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     public void deleteUserRolesByUserId(List<String> userIds) {
         baseMapper.delete(new LambdaQueryWrapper<UserRole>().in(UserRole::getUserId, userIds));
     }
+
+    @Override
+    @Transactional
+    public void deleteUserRolesByRoleId(List<String> roleIds) {
+        baseMapper.delete(new LambdaQueryWrapper<UserRole>().in(UserRole::getRoleId, roleIds));
+    }
 }

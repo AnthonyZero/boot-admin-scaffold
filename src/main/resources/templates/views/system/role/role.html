@@ -140,7 +140,7 @@
             }
         });
 
-        dropdown.render({
+        /*dropdown.render({
             elem: $view.find('.action-more'),
             click: function (name, elem, event) {
                 var checkStatus = table.checkStatus('roleTable');
@@ -180,7 +180,7 @@
                 title: '导出Excel',
                 perms: 'role:export'
             }]
-        });
+        });*/
 
         table.on('tool(roleTable)', function (obj) {
             var data = obj.data,
@@ -228,6 +228,22 @@
         //添加角色
         $addRole.on('click', function () {
             resetRoleForm();
+        })
+
+        //删除角色
+        $deleteRole.on('click', function () {
+            var checkStatus = table.checkStatus('roleTable');
+            if (!checkStatus.data.length) {
+                febs.alert.warn('请选择需要删除的角色');
+            } else {
+                febs.modal.confirm('删除角色', '确定删除所选角色？', function () {
+                    var roleIds = [];
+                    layui.each(checkStatus.data, function (key, item) {
+                        roleIds.push(item.roleId);
+                    });
+                    deleteRoles(roleIds.join(','));
+                });
+            }
         })
 
         $submit.on('click', function () {
