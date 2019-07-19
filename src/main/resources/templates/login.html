@@ -14,7 +14,7 @@
     <link rel="icon" th:href="@{febs/images/favicon.ico}" type="image/x-icon"/>
 </head>
 <body>
-<div id="febs-login" lay-title="登录">
+<div id="febs-login" lay-title="登录" style="z-index: 100;position: relative;">
     <div class="login-wrap">
         <div class="layui-container">
             <div class="layui-row">
@@ -110,6 +110,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" color="0,0,255" pointColor="0,0,255" opacity='0.5' zIndex="10" count="150" th:src="@{febs/js/canvas-nest.js}"></script>
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{/}]];
