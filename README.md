@@ -21,7 +21,5 @@
 - [FEBS-Shiro 模板](https://github.com/wuyouzhuguli/FEBS-Shiro)
 
 ### 系统截图
-![screenshot](screenshot/sc1.png)
-![screenshot](screenshot/sc2.png)
-![screenshot](screenshot/sc3.png)
-![screenshot](screenshot/sc4.png)
+![screenshot](screenshot/sc1.png) ![screenshot](screenshot/sc2.png)
+![screenshot](screenshot/sc3.png) ![screenshot](screenshot/sc4.png)
