@@ -27,10 +27,10 @@
 
 ### 快速体验
 * 下载源码 导入到IDE中
-* 创建数据库并执行项目下sql文件夹下中数据库脚步
+* 创建数据库并执行项目下sql文件夹下中数据库[脚步](sql/scaffold.sql)
 * 修改项目下application-dev.yml中的数据库配置和redis配置
-* 启动Redis Server, 执行ScaffoldSpringApplication
-* 按照控制台输出进入指示页面 输入admin/123456 登录并体验
+* 启动**Redis Server**, 执行[ScaffoldSpringApplication](src/main/java/com/anthonyzero/scaffold/ScaffoldSpringApplication.java)
+* 按照控制台输出进入指示页面 输入**admin**/**123456**登录并体验
 
 ### 系统截图
 ![screenshot](screenshot/sc1.png) 
