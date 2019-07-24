@@ -1,0 +1,278 @@
+<div class="layui-fluid layui-anim febs-anim" id="custom-page" lay-title="客户信息管理">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="custom-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">创建时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="createTime" id="createTime" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">销售人员</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="saleName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">跟进状态</label>
+                                        <div class="layui-input-inline">
+                                            <select name="status">
+                                                <option value=""></option>
+                                                <option value="0">意向客户</option>
+                                                <option value="1">服务中</option>
+                                                <option value="2">欠费中</option>
+                                                <option value="3">服务结束</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">需求类型</label>
+                                        <div class="layui-input-inline">
+                                            <select name="sex">
+                                                <option value=""></option>
+                                                <option value="1">社保挂靠</option>
+                                                <option value="2">社保补缴</option>
+                                                <option value="3">失业保险代办</option>
+                                                <option value="4">生育保险代办</option>
+                                                <option value="5">养老保险代办</option>
+                                                <option value="6">工伤保险代办</option>
+                                                <option value="7">公积金挂靠</option>
+                                                <option value="8">公积金补缴</option>
+                                                <option value="9">集体落户</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query" title="搜索">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset" title="刷新">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="addCustom" shiro:hasPermission="custom:add" title="添加客户">
+                                    <i class="layui-icon">&#xe61f;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="customTable" lay-data="{id: 'customTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="user-status">
+    {{#
+    var status = {
+    1: {title: '有效', color: 'green'},
+    0: {title: '禁用', color: 'volcano'}
+    }[d.status];
+    }}
+    <span class="layui-badge febs-tag-{{status.color}}">{{ status.title }}</span>
+</script>
+<script type="text/html" id="user-option">
+    <span shiro:lacksPermission="custom:view,custom:update,custom:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="detail" shiro:hasPermission="custom:view" title="查看详情"><i
+            class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+    <a lay-event="edit" shiro:hasPermission="custom:update" title="修改"><i
+            class="layui-icon febs-edit-area febs-blue">&#xe631;</i></a>
+    <a lay-event="del" shiro:hasPermission="custom:delete" title="删除"><i
+            class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'laydate', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+
+            $view = $('#custom-page'), //当前页面
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $addUser = $view.find("#addUser"),
+            $deleteUser = $view.find("#deleteUser"),
+            $searchForm = $view.find('form'),
+            sortObject = {field: 'createTime', type: 'desc'},
+            tableIns;
+
+        form.render();
+
+        initTable();
+
+        //日期 选择范围
+        laydate.render({
+            elem: '#createTime',
+            range: true,
+            trigger: 'click'
+        });
+
+
+        //表格每行数据操作
+        table.on('tool(userTable)', function (obj) {
+            var data = obj.data, //每行数据
+                layEvent = obj.event;  //定义的事件名称
+            if (layEvent === 'detail') {
+                febs.modal.view('用户信息', 'system/user/detail/' + data.username, {
+                    area: $(window).width() <= 750 ? '95%' : '660px'
+                });
+            }
+            if (layEvent === 'del') {
+                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
+                    deleteUsers(data.userId);
+                });
+            }
+            if (layEvent === 'edit') {
+                febs.modal.open('修改用户', 'system/user/update/' + data.username, {
+                    area: $(window).width() <= 750 ? '90%' : '50%',
+                    btn: ['提交', '取消'],
+                    yes: function (index, layero) {
+                        $('#user-update').find('#submit').trigger('click');
+                    },
+                    btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
+            if (layEvent === 'reset') {
+                var usernames = [];
+                usernames.push(data.username);
+                febs.post(ctx + 'user/password/reset/' + usernames.join(','), null, function () {
+                    febs.alert.success('所选用户密码已重置为123456');
+                });
+            }
+        });
+
+        // 对应表格sort为true的 点击事件   obj 包含字段名称 和 排序方法desc asc
+        table.on('sort(userTable)', function (obj) {
+            //{field: "createTime", type: "desc"}
+            sortObject = obj;
+            tableIns.reload({
+                initSort: obj,  //表格sort 字段初始化显示
+                where: $.extend(getQueryParams(), { //合并参数
+                    field: obj.field,
+                    order: obj.type
+                })
+            });
+        });
+
+        $query.on('click', function () {
+            console.log(sortObject);
+            var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
+            tableIns.reload({
+                where: params,
+                page: {
+                    curr: 1
+                }
+            });
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            /*treeSelect.revokeNode('dept');*/
+            sortObject.type = 'null';
+            tableIns.reload({
+                where: getQueryParams(),
+                page: {
+                    curr: 1
+                },
+                initSort: sortObject
+            });
+        });
+        
+        //添加用户
+        $addUser.on('click', function () {
+            febs.modal.open('新增用户', 'system/user/add', {
+                btn: ['提交', '重置'],
+                area: $(window).width() <= 750 ? '95%' : '50%',
+                yes: function (index, layero) {
+                    $('#user-add').find('#submit').trigger('click');
+                },
+                btn2: function () {
+                    $('#user-add').find('#reset').trigger('click');
+                    return false;
+                }
+            });
+        })
+        
+        //删除所选用户
+        $deleteUser.on('click', function () {
+            var checkStatus = table.checkStatus('userTable');
+            if (!checkStatus.data.length) {
+                febs.alert.warn('请选择需要删除的用户');
+            } else {
+                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
+                    var userIds = [];
+                    layui.each(checkStatus.data, function (key, item) {
+                        userIds.push(item.userId)
+                    });
+                    deleteUsers(userIds.join(','));
+                });
+            }
+        })
+
+        /**
+         * 初始化表格
+         */
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'customTable',
+                url: ctx + 'user/list',
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'username', title: '用户名', minWidth: 100},
+                    {field: 'nickname', title: '昵称', minWidth: 100},
+                    {title: '性别', templet: '#user-sex'}, //templet js脚本转换 翻译
+                    {field: 'mobile', title: '手机', minWidth: 165},
+                    {field: 'email', title: '邮箱', minWidth: 180},
+                    {title: '状态', templet: '#user-status'},
+                    {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
+                    {title: '操作', toolbar: '#user-option', minWidth: 140}
+                ]]
+            });
+        }
+
+        // 获取查询参数
+        function getQueryParams() {
+            var createTimeFrom,
+                createTimeTo,
+                createTime = $searchForm.find('input[name="createTime"]').val();
+            if (createTime) {
+                createTimeFrom = createTime.split(' - ')[0];
+                createTimeTo = createTime.split(' - ')[1];
+            }
+            return {
+                createTimeFrom: createTimeFrom, //开始时间begine
+                createTimeTo: createTimeTo,  //结束时间end
+                nickname: $searchForm.find('input[name="nickname"]').val().trim(),
+                status: $searchForm.find("select[name='status']").val(),
+                sex: $searchForm.find("select[name='sex']").val(),
+                mobile: $searchForm.find("input[name='mobile']").val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+        function deleteUsers(userIds) {
+            var currentUserId = currentUser.userId + '';
+            if (('' + userIds).split(',').indexOf(currentUserId) !== -1) {
+                febs.alert.warn('所选用户包含当前登录用户，无法删除');
+                return;
+            }
+            febs.get(ctx + 'user/delete/' + userIds, null, function () {
+                febs.alert.success('删除用户成功');
+                $query.click();
+            });
+        }
+    })
+</script>
