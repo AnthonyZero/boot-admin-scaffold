@@ -83,4 +83,41 @@
         custom_id, fullname, phone, address, id_card, birthday, status, demand_desc, demand_background, wage_base, social_deposit, fund_deposit, social_rely_handle_card, social_rely_pay, socail_rely_active_pay, socail_rely_service_pay, socail_rely_down_pay, socail_rely_arrears, socail_rely_contract_number, socail_rely_contract_start_date, socail_rely_contract_end_date, socail_patch_service_pay, socail_patch_pay, socail_patch_start_time, socail_patch_end_time, socail_patch_years, socail_patch_down_pay, socail_patch_arrears, socail_patch_contract_number, socail_patch_contract_start_date, socail_patch_contract_end_date, unemployed_service_pay, unemployed_down_pay, unemployed_arrears, unemployed_contract_number, unemployed_contract_start_date, unemployed_contract_end_date, birth_service_pay, birth_down_pay, birth_arrears, birth_contract_number, birth_contract_start_date, birth_contract_end_date, job_service_pay, job_down_pay, job_arrears, job_contract_number, job_contract_start_date, job_contract_end_date, job_other_desc, fund_rely_handle_card, fund_rely_pay, fund_rely_active_pay, fund_rely_service_pay, fund_rely_down_pay, fund_rely_arrears, fund_rely_contract_number, fund_rely_contract_start_date, fund_rely_contract_end_date, fund_patch_service_pay, fund_patch_pay, fund_patch_down_pay, fund_patch_arrears, fund_patch_contract_number, fund_patch_contract_start_date, fund_patch_contract_end_date, fund_patch_other_desc, sale_user_id, create_time, create_user_id, modify_time, modify_user_id
     </sql>
 
+
+    <select id="pageCustom" parameterType="com.anthonyzero.scaffold.custom.dto.CustomInfo" resultType="com.anthonyzero.scaffold.custom.dto.CustomInfo">
+        SELECT
+            a.custom_id as customId,
+            a.fullname as fullname,
+            a.phone as phone,
+            (select GROUP_CONCAT(demand_type_name) FROM custom_demand_type WHERE custom_id = a.custom_id) as demandTypeName,
+            a.sale_user_id as saleUserId,
+            c.nickname as saleName,
+            a.`status` as status,
+            a.create_time as createTime,
+            a.modify_time as modifyTime,
+            (select nickname from `user` WHERE user_id = a.modify_user_id) as modifyUserName
+        FROM
+        custom a
+        JOIN custom_demand_type b ON a.custom_id = b.custom_id
+        join user c on a.sale_user_id = c.user_id
+
+        WHERE 1 = 1
+        <if test="custom.saleName != null and custom.saleName != ''">
+            AND c.nickname like CONCAT('%',#{custom.saleName},'%')
+        </if>
+        <if test="custom.status != null">
+            and a.`status` = #{custom.status}
+        </if>
+        <if test="custom.demandType != null and custom.demandType != ''">
+            and b.demand_type = #{custom.demandType}
+        </if>
+        <if test="custom.createTimeFrom != null and custom.createTimeFrom !=''">
+            And a.create_time &gt;= #{custom.createTimeFrom}
+        </if>
+        <if test="custom.createTimeTo!= null and custom.createTimeTo !=''">
+            And a.create_time &lt;= #{custom.createTimeTo}
+        </if>
+
+        GROUP BY a.custom_id
+    </select>
 </mapper>

@@ -52,5 +52,6 @@ public class DemandType implements Serializable {
     @TableField("demand_type")
     private Integer demandType;
 
-
+    @TableField("demand_type_name")
+    private String demandTypeName;
 }

@@ -34,7 +34,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">需求类型</label>
                                         <div class="layui-input-inline">
-                                            <select name="sex">
+                                            <select name="demandType">
                                                 <option value=""></option>
                                                 <option value="1">社保挂靠</option>
                                                 <option value="2">社保补缴</option>
@@ -69,16 +69,18 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="user-status">
+<script type="text/html" id="custom-status">
     {{#
     var status = {
-    1: {title: '有效', color: 'green'},
-    0: {title: '禁用', color: 'volcano'}
+    0: {title: '意向客户', color: 'green'},
+    1: {title: '服务中', color: 'green'},
+    2: {title: '欠费中', color: 'volcano'},
+    3: {title: '服务结束', color: 'volcano'}
     }[d.status];
     }}
     <span class="layui-badge febs-tag-{{status.color}}">{{ status.title }}</span>
 </script>
-<script type="text/html" id="user-option">
+<script type="text/html" id="custom-option">
     <span shiro:lacksPermission="custom:view,custom:update,custom:delete">
         <span class="layui-badge-dot febs-bg-orange"></span> 无权限
     </span>
@@ -119,7 +121,7 @@
 
 
         //表格每行数据操作
-        table.on('tool(userTable)', function (obj) {
+        table.on('tool(customTable)', function (obj) {
             var data = obj.data, //每行数据
                 layEvent = obj.event;  //定义的事件名称
             if (layEvent === 'detail') {
@@ -154,7 +156,7 @@
         });
 
         // 对应表格sort为true的 点击事件   obj 包含字段名称 和 排序方法desc asc
-        table.on('sort(userTable)', function (obj) {
+        table.on('sort(customTable)', function (obj) {
             //{field: "createTime", type: "desc"}
             sortObject = obj;
             tableIns.reload({
@@ -167,7 +169,6 @@
         });
 
         $query.on('click', function () {
-            console.log(sortObject);
             var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
             tableIns.reload({
                 where: params,
@@ -179,8 +180,6 @@
 
         $reset.on('click', function () {
             $searchForm[0].reset();
-            /*treeSelect.revokeNode('dept');*/
-            sortObject.type = 'null';
             tableIns.reload({
                 where: getQueryParams(),
                 page: {
@@ -228,17 +227,19 @@
             tableIns = febs.table.init({
                 elem: $view.find('table'),
                 id: 'customTable',
-                url: ctx + 'user/list',
+                url: ctx + 'custom/page',
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'username', title: '用户名', minWidth: 100},
-                    {field: 'nickname', title: '昵称', minWidth: 100},
-                    {title: '性别', templet: '#user-sex'}, //templet js脚本转换 翻译
-                    {field: 'mobile', title: '手机', minWidth: 165},
-                    {field: 'email', title: '邮箱', minWidth: 180},
-                    {title: '状态', templet: '#user-status'},
+                    {field: 'customId', title: '客户编号', minWidth: 100},
+                    {field: 'fullname', title: '姓名', minWidth: 100},
+                    {field: 'phone', title: '联系电话', minWidth: 165},
+                    {field: 'demandTypeName', title: '需求类型', minWidth: 230},
+                    {field: 'saleName', title: '销售人员', minWidth: 120},
+                    {title: '跟进状态', templet: '#custom-status'}, //templet js脚本转换 翻译
                     {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
-                    {title: '操作', toolbar: '#user-option', minWidth: 140}
+                    {field: 'modifyTime', title: '操作时间', minWidth: 180},
+                    {field: 'modifyUserName', title: '操作人', minWidth: 100},
+                    {title: '操作', toolbar: '#custom-option', minWidth: 140}
                 ]]
             });
         }
@@ -255,10 +256,9 @@
             return {
                 createTimeFrom: createTimeFrom, //开始时间begine
                 createTimeTo: createTimeTo,  //结束时间end
-                nickname: $searchForm.find('input[name="nickname"]').val().trim(),
+                saleName: $searchForm.find('input[name="saleName"]').val().trim(),
                 status: $searchForm.find("select[name='status']").val(),
-                sex: $searchForm.find("select[name='sex']").val(),
-                mobile: $searchForm.find("input[name='mobile']").val().trim(),
+                demandType: $searchForm.find("select[name='demandType']").val(),
                 invalidate_ie_cache: new Date()
             };
         }
