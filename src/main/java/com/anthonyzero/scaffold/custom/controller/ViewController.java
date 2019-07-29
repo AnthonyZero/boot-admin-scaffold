@@ -18,4 +18,15 @@ public class ViewController extends BaseController {
     public String pageCustomIndex() {
         return SysConstant.VIEW_PREFIX + "custom/user/list";
     }
+
+
+    /**
+     * 客户信息添加页面
+     * @return
+     */
+    @RequestMapping(SysConstant.VIEW_PREFIX + "custom/add")
+    @RequiresPermissions("custom:add")
+    public String addCustomIndex() {
+        return SysConstant.VIEW_PREFIX + "custom/user/customAdd";
+    }
 }

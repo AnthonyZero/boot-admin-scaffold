@@ -102,8 +102,7 @@
             $view = $('#custom-page'), //当前页面
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
-            $addUser = $view.find("#addUser"),
-            $deleteUser = $view.find("#deleteUser"),
+            $addCustom = $view.find("#addCustom"),
             $searchForm = $view.find('form'),
             sortObject = {field: 'createTime', type: 'desc'},
             tableIns;
@@ -189,36 +188,21 @@
             });
         });
         
-        //添加用户
-        $addUser.on('click', function () {
-            febs.modal.open('新增用户', 'system/user/add', {
+        //添加客户
+        $addCustom.on('click', function () {
+            febs.modal.open('新增客户', 'custom/add', {
                 btn: ['提交', '重置'],
                 area: $(window).width() <= 750 ? '95%' : '50%',
                 yes: function (index, layero) {
-                    $('#user-add').find('#submit').trigger('click');
+                    $('#custom-add').find('#submit').trigger('click');
                 },
                 btn2: function () {
-                    $('#user-add').find('#reset').trigger('click');
+                    $('#custom-add').find('#reset').trigger('click');
                     return false;
                 }
             });
         })
-        
-        //删除所选用户
-        $deleteUser.on('click', function () {
-            var checkStatus = table.checkStatus('userTable');
-            if (!checkStatus.data.length) {
-                febs.alert.warn('请选择需要删除的用户');
-            } else {
-                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
-                    var userIds = [];
-                    layui.each(checkStatus.data, function (key, item) {
-                        userIds.push(item.userId)
-                    });
-                    deleteUsers(userIds.join(','));
-                });
-            }
-        })
+
 
         /**
          * 初始化表格
@@ -261,18 +245,6 @@
                 demandType: $searchForm.find("select[name='demandType']").val(),
                 invalidate_ie_cache: new Date()
             };
-        }
-
-        function deleteUsers(userIds) {
-            var currentUserId = currentUser.userId + '';
-            if (('' + userIds).split(',').indexOf(currentUserId) !== -1) {
-                febs.alert.warn('所选用户包含当前登录用户，无法删除');
-                return;
-            }
-            febs.get(ctx + 'user/delete/' + userIds, null, function () {
-                febs.alert.success('删除用户成功');
-                $query.click();
-            });
         }
     })
 </script>
