@@ -190,7 +190,8 @@
         
         //添加客户
         $addCustom.on('click', function () {
-            febs.modal.open('新增客户', 'custom/add', {
+            febs.navigate('/custom/add');
+            /*febs.modal.open('新增客户', 'custom/add', {
                 btn: ['提交', '重置'],
                 area: $(window).width() <= 750 ? '95%' : '50%',
                 yes: function (index, layero) {
@@ -200,7 +201,7 @@
                     $('#custom-add').find('#reset').trigger('click');
                     return false;
                 }
-            });
+            });*/
         })
 
 

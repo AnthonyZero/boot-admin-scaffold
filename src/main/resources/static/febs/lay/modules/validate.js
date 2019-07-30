@@ -61,6 +61,13 @@ layui.define(['jquery'], function (exports) {
                 }
             }
         },
+        decimal: function(value) {
+            if (!isEmpty(value)) {
+              if (!new RegExp("^(([1-9][0-9]*)|(([0]\\.\\d{1,2}|[1-9][0-9]*\\.\\d{1,2})))$").test(value)) {
+                  return "只能填写数字（保留两位小数）"
+              }
+            }
+        },
         range: function (value, item) {
             var minlength = item.getAttribute('minlength') ? item.getAttribute('minlength') : -1;
             var maxlength = item.getAttribute('maxlength') ? item.getAttribute('maxlength') : -1;

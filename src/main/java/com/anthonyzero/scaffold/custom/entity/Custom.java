@@ -458,5 +458,9 @@ public class Custom implements Serializable {
     @TableField("modify_user_id")
     private Long modifyUserId;
 
-
+    /**
+     * 需求项 多选
+     */
+    @TableField(exist = false)
+    private String demandTypeStr;
 }
