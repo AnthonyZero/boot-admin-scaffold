@@ -23,4 +23,10 @@ public interface CustomService extends IService<Custom> {
      * @return
      */
     IPage<CustomInfo> pageCustom(CustomInfo customInfo, RequestQuery request);
+
+    /**
+     * 新增客户
+     * @param custom
+     */
+    void createCustom(Custom custom);
 }

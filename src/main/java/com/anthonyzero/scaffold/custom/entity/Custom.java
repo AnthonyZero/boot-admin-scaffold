@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -60,6 +63,7 @@ public class Custom implements Serializable {
      * 出生日期
      */
     @TableField("birthday")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     /**
@@ -144,12 +148,14 @@ public class Custom implements Serializable {
      * 社保挂靠 合同开始日期
      */
     @TableField("socail_rely_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailRelyContractStartDate;
 
     /**
      * 社保挂靠 合同结束日期
      */
     @TableField("socail_rely_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailRelyContractEndDate;
 
     /**
@@ -168,12 +174,14 @@ public class Custom implements Serializable {
      * 社保补缴 开始时间
      */
     @TableField("socail_patch_start_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailPatchStartTime;
 
     /**
      * 社保补缴 结束时间
      */
     @TableField("socail_patch_end_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailPatchEndTime;
 
     /**
@@ -204,12 +212,14 @@ public class Custom implements Serializable {
      * 社保补缴 合同开始日期
      */
     @TableField("socail_patch_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailPatchContractStartDate;
 
     /**
      * 社保补缴 合同结束日期
      */
     @TableField("socail_patch_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate socailPatchContractEndDate;
 
     /**
@@ -240,12 +250,14 @@ public class Custom implements Serializable {
      * 失业保险 合同开始日期
      */
     @TableField("unemployed_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate unemployedContractStartDate;
 
     /**
      * 失业保险 合同结束日期
      */
     @TableField("unemployed_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate unemployedContractEndDate;
 
     /**
@@ -276,12 +288,14 @@ public class Custom implements Serializable {
      * 生育保险 合同开始日期
      */
     @TableField("birth_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthContractStartDate;
 
     /**
      * 生育保险 合同结束日期
      */
     @TableField("birth_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthContractEndDate;
 
     /**
@@ -312,12 +326,14 @@ public class Custom implements Serializable {
      * 工伤保险 合同开始日期
      */
     @TableField("job_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate jobContractStartDate;
 
     /**
      * 工伤保险 合同结束日期
      */
     @TableField("job_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate jobContractEndDate;
 
     /**
@@ -372,12 +388,14 @@ public class Custom implements Serializable {
      * 公积金挂靠 合同开始日期
      */
     @TableField("fund_rely_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fundRelyContractStartDate;
 
     /**
      * 公积金挂靠 合同结束日期
      */
     @TableField("fund_rely_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fundRelyContractEndDate;
 
     /**
@@ -414,12 +432,14 @@ public class Custom implements Serializable {
      * 公积金补缴 合同开始日期
      */
     @TableField("fund_patch_contract_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fundPatchContractStartDate;
 
     /**
      * 公积金补缴 合同结束日期
      */
     @TableField("fund_patch_contract_end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fundPatchContractEndDate;
 
     /**

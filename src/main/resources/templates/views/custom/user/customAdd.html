@@ -72,7 +72,7 @@
                     <div class="layui-card-body">
                         <div class="layui-row">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">需求项：</label>
+                                <label class="layui-form-label febs-form-item-require">需求项：</label>
                                 <div class="layui-input-block">
                                     <input type="checkbox" name="demandType" value="1" title="社保挂靠" checked>
                                     <input type="checkbox" name="demandType" value="2" title="社保补缴">
@@ -787,6 +787,17 @@
                 ,value: '1989-10-14 - 2007-02-24'
                 ,isInitValue: true
             });*/
+            febs.post(ctx + 'custom/add', data.field, function () {  //不管post 还是get 只出了成功情况 失败情况统一处理了：详情见febs.js 统一处理响应
+                febs.modal.confirm('添加客户成功','是否继续添加？',function () {
+                    febs.view.tab.refresh();
+                }, function () {
+                    var currentUrl = window.location.hash.replace('#', '');
+                    febs.view.tab.del(currentUrl); //关闭当前Tab页，并跳转到列表页
+                    /*febs.view.tab.change("/custom/user");*/
+                    febs.navigate("/custom/user"); //如果关闭会刷新
+                })
+            });
+
             return false;
         });
     });

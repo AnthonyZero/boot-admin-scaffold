@@ -5,12 +5,21 @@ import com.anthonyzero.scaffold.common.core.SysConstant;
 import com.anthonyzero.scaffold.common.utils.SortUtil;
 import com.anthonyzero.scaffold.custom.dto.CustomInfo;
 import com.anthonyzero.scaffold.custom.entity.Custom;
+import com.anthonyzero.scaffold.custom.entity.DemandType;
 import com.anthonyzero.scaffold.custom.mapper.CustomMapper;
+import com.anthonyzero.scaffold.custom.mapper.DemandTypeMapper;
 import com.anthonyzero.scaffold.custom.service.CustomService;
+import com.anthonyzero.scaffold.system.entity.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -23,10 +32,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomServiceImpl extends ServiceImpl<CustomMapper, Custom> implements CustomService {
 
+    @Autowired
+    private DemandTypeMapper demandTypeMapper;
+
     @Override
     public IPage<CustomInfo> pageCustom(CustomInfo customInfo, RequestQuery request) {
         Page<CustomInfo> page = new Page<>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "createTime", SysConstant.ORDER_DESC);
         return baseMapper.pageCustom(page, customInfo);
+    }
+
+    @Override
+    @Transactional
+    public void createCustom(Custom custom) {
+        String[] demand = custom.getDemandTypeStr().split(",");
+        User current = (User) SecurityUtils.getSubject().getPrincipal();
+        custom.setCreateUserId(current.getUserId());
+        custom.setCreateTime(LocalDateTime.now());
+        baseMapper.insert(custom);
+        Arrays.asList(demand).forEach(demandType -> {
+            DemandType type = new DemandType();
+            type.setCustomId(custom.getCustomId());
+            type.setDemandType(Integer.valueOf(demandType));
+            type.setDemandTypeName(DemandType.demantTypeMap.get(type.getDemandType()));
+            demandTypeMapper.insert(type);
+        });
     }
 }

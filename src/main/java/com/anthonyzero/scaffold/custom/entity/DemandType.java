@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,6 +27,19 @@ import lombok.experimental.Accessors;
 public class DemandType implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static Map<Integer,String> demantTypeMap = new HashMap<>();
+    static {
+        demantTypeMap.put(1, "社保挂靠");
+        demantTypeMap.put(2, "社保补缴");
+        demantTypeMap.put(3, "失业保险代办");
+        demantTypeMap.put(4, "生育保险代办");
+        demantTypeMap.put(5, "养老保险代办");
+        demantTypeMap.put(6, "工伤保险代办");
+        demantTypeMap.put(7, "公积金挂靠");
+        demantTypeMap.put(8, "公积金补缴");
+        demantTypeMap.put(9, "集体落户");
+    }
 
     /**
      * 主键ID
