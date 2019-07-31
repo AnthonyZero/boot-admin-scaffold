@@ -635,7 +635,7 @@
             form.val("custom-detail-form", custom);
 
             //对复选框单独赋值
-            layui.$('input:checkbox[name="demandType"]').each(function (index, element) {
+            $view.find('input:checkbox[name="demandType"]').each(function (index, element) {
                 var value = $(element).val();
                 var jugde = demandTypeList.join(",");
                 if (jugde.indexOf(value) != -1) {

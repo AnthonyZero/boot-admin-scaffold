@@ -721,7 +721,7 @@
 
         form.on('submit(custom-form-btn)', function (data) {
             var checkboxValue="";
-            $("input:checkbox[name='demandType']:checked").each(function() { // 遍历name=demandType的多选框
+            $view.find("input:checkbox[name='demandType']:checked").each(function() { // 遍历name=demandType的多选框
                 if(checkboxValue==0){
                     checkboxValue = $(this).val();
                     return true;

@@ -597,7 +597,7 @@
                                                 lay-verify="required"
                                                 xm-select-direction="up"
                                                 xm-select-search=""
-                                                xm-select="sale-user-add"
+                                                xm-select="sale-user-update"
                                                 xm-select-skin="default"
                                                 xm-select-radio>
                                         </select>
@@ -608,7 +608,7 @@
                             <div class="layui-col-md6">
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit lay-filter="custom-form-btn">保存提交</button>
+                                        <button class="layui-btn" lay-submit lay-filter="custom-form-update">保存提交</button>
                                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     </div>
                                 </div>
@@ -706,7 +706,7 @@
             form.val("custom-form", custom);
 
             //对复选框单独赋值
-            layui.$('input:checkbox[name="demandType"]').each(function (index, element) {
+            $view.find('input:checkbox[name="demandType"]').each(function (index, element) {
                 var value = $(element).val();
                 var jugde = demandTypeList.join(",");
                 if (jugde.indexOf(value) != -1) {
@@ -716,7 +716,7 @@
             form.render("checkbox");
         }
 
-        formSelects.config('sale-user-add', {
+        formSelects.config('sale-user-update', {
             searchUrl: ctx + 'user/selectValidUser',
             response: {
                 statusCode: 0
@@ -735,7 +735,7 @@
             },
             success: function () {
                 var saleUserId = custom.saleUserId + "";
-                formSelects.value('sale-user-add', saleUserId.split(",")); //必须字符串数组
+                formSelects.value('sale-user-update', saleUserId.split(",")); //必须字符串数组
             },
             error: function (id, url, searchVal, err) {
                 febs.alert.error('获取用户列表失败');
@@ -743,10 +743,11 @@
         });
 
 
-        form.on('submit(custom-form-btn)', function (data) {
+        form.on('submit(custom-form-update)', function (data) {
             data.field.customId = custom.customId;
             var checkboxValue="";
-            $("input:checkbox[name='demandType']:checked").each(function() { // 遍历name=demandType的多选框
+            //当前页面find属性 以免bug 连到其他页面相同checkbox属性指一起了
+            $view.find("input:checkbox[name='demandType']:checked").each(function() { // 遍历name=demandType的多选框
                 if(checkboxValue==0){
                     checkboxValue = $(this).val();
                     return true;
