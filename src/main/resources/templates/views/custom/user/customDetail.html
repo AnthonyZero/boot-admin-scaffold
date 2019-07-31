@@ -1,0 +1,649 @@
+<div class="layui-fluid layui-anim febs-anim " id="custom-detail-page" lay-title="客户详情">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md12">
+            <form class="layui-form" lay-filter="custom-detail-form">
+                <div class="layui-card">
+                    <div class="layui-card-header">基本信息</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label febs-form-item-require">姓名：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fullname" minlength="4" maxlength="20" lay-verify="range"
+                                               autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">联系方式：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="phone" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">地址：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="address" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label febs-form-item-require">身份证：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="idCard"  lay-verify="required"
+                                               autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">出生年月：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthday" id="birthday" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">当前状态：</label>
+                                    <div class="layui-input-block">
+                                        <select name="status" lay-verify="required" disabled>
+                                            <option value=""></option>
+                                            <option value="0">意向客户</option>
+                                            <option value="1">服务中</option>
+                                            <option value="2">欠费中</option>
+                                            <option value="3">服务结束</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">需求信息</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label febs-form-item-require">需求项：</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="demandType" value="1" title="社保挂靠" disabled>
+                                    <input type="checkbox" name="demandType" value="2" title="社保补缴" disabled>
+                                    <input type="checkbox" name="demandType" value="3" title="失业保险代办" disabled>
+                                    <input type="checkbox" name="demandType" value="4" title="生育保险代办" disabled>
+                                    <input type="checkbox" name="demandType" value="5" title="养老保险代办" disabled>
+                                    <input type="checkbox" name="demandType" value="6" title="工伤保险代办" disabled>
+                                    <input type="checkbox" name="demandType" value="7" title="公积金挂靠" disabled>
+                                    <input type="checkbox" name="demandType" value="8" title="公积金补缴" disabled>
+                                    <input type="checkbox" name="demandType" value="9" title="集体落户" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">需求描述：</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="demandDesc" maxlength="100" class="layui-textarea" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4 layui-col-md-offset1">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">需求背景：</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="demandBackground" maxlength="100" class="layui-textarea" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">业务办理信息:</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">工资基数：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="wageBase"  lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保押金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socialDeposit" lay-verify="decimal"autocomplete="off"class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金押金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundDeposit" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">社保挂靠业务：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否新办社保卡：</label>
+                                    <div class="layui-input-block">
+                                        <select name="socialRelyHandleCard" disabled>
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保缴费(元/月)：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socialRelyPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保激活费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyActivePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保服务费(元/月)：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyContractNumber"  autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailRelyContractDate" id="socailRelyContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">社保补缴业务：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">代办社保补缴服务费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">代办社保补缴费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">补缴时间：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchTime" id="socailPatchTime" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">补缴几年：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchYears" lay-verify="number" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchContractNumber" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailPatchContractDate" id="socailPatchContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">失业保险代办：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">代办失业保险服务费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unemployedServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unemployedDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unemployedArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unemployedContractNumber" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unemployedContractDate" id="unemployedContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">生育保险代办：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">代办生育保险服务费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthContractNumber" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="birthContractDate" id="birthContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">工伤保险代办：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">代办工伤保险服务费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="jobServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="jobDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="jobArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="jobContractNumber" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="jobContractDate" id="jobContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保代办其他补充说明：</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="jobOtherDesc" maxlength="100" class="layui-textarea" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-card">
+                    <div class="layui-card-header">公积金挂靠业务：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否新办公积金卡：</label>
+                                    <div class="layui-input-block">
+                                        <select name="fundRelyHandleCard" disabled>
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金缴费(元/月)：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金激活费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyActivePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金服务费(元/月)：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyContractNumber"  autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyContractDate" id="fundRelyContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">公积金补缴业务：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金补缴服务费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchServicePay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金补缴费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">缴费定金：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchDownPay" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">欠缴：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchArrears" lay-verify="decimal" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同编号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchContractNumber" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">合同日期：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchContractDate" id="fundPatchContractDate" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公积金代办其他补充说明：</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="fundPatchOtherDesc" maxlength="100" class="layui-textarea" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">销售人员：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="saleUserName" autocomplete="off" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'validate', 'laydate', 'formSelects'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            validate = layui.validate,
+            laydate = layui.laydate,
+            form = layui.form,
+            custom = [[${custom}]], //客户信息
+            saleUserName = [[${saleUserName}]],
+            demandTypeList = [[${demandTypeList}]],
+            $view = $('#custom-detail-page');
+
+
+        form.render();
+
+        initCustomDetail();
+
+        function initCustomDetail() {
+            custom.saleUserName = saleUserName;
+            custom.socailRelyContractDate = custom.socailRelyContractStartDate + " - " + custom.socailRelyContractEndDate;
+            custom.socailPatchTime = custom.socailPatchStartTime + " - " + custom.socailPatchEndTime;
+            custom.socailPatchContractDate = custom.socailPatchContractStartDate + " - " + custom.socailPatchContractEndDate;
+            custom.unemployedContractDate = custom.unemployedContractStartDate + " - " + custom.unemployedContractEndDate;
+            custom.birthContractDate = custom.birthContractStartDate + " - " + custom.birthContractEndDate;
+            custom.jobContractDate = custom.jobContractStartDate + " - " + custom.jobContractEndDate;
+            custom.fundRelyContractDate = custom.fundRelyContractStartDate + " - " + custom.fundRelyContractEndDate;
+            custom.fundPatchContractDate = custom.fundPatchContractStartDate + " - " + custom.fundPatchContractEndDate;
+            form.val("custom-detail-form", custom);
+
+            //对复选框单独赋值
+            layui.$('input:checkbox[name="demandType"]').each(function (index, element) {
+                var value = $(element).val();
+                var jugde = demandTypeList.join(",");
+                if (jugde.indexOf(value) != -1) {
+                    $(element).prop("checked", true);
+                }
+            })
+            form.render("checkbox");
+        }
+
+    });
+</script>

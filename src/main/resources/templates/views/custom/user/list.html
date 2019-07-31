@@ -124,9 +124,7 @@
             var data = obj.data, //每行数据
                 layEvent = obj.event;  //定义的事件名称
             if (layEvent === 'detail') {
-                febs.modal.view('用户信息', 'system/user/detail/' + data.username, {
-                    area: $(window).width() <= 750 ? '95%' : '660px'
-                });
+                febs.navigate("/custom/detail/" + data.customId)
             }
             if (layEvent === 'del') {
                 febs.modal.confirm('删除用户', '确定删除该用户？', function () {
