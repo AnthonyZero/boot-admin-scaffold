@@ -66,4 +66,21 @@ public class ViewController extends BaseController {
         modelMap.addAttribute("saleUserName", userService.getById(custom.getSaleUserId()).getNickname());
         return SysConstant.VIEW_PREFIX + "custom/user/customDetail";
     }
+
+
+    /**
+     * 修改客户信息页面
+     * @param customId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(SysConstant.VIEW_PREFIX + "custom/update/{customId}")
+    @RequiresPermissions("custom:update")
+    public String customUpdatePage(@PathVariable Long customId, ModelMap modelMap) {
+        Custom custom = customService.getById(customId);
+        List<DemandType> list = demandTypeService.list(new LambdaQueryWrapper<DemandType>().eq(DemandType::getCustomId, customId));
+        modelMap.addAttribute("custom", custom);
+        modelMap.addAttribute("demandTypeList", list.stream().map(DemandType::getDemandType).collect(Collectors.toList()));
+        return SysConstant.VIEW_PREFIX + "custom/user/customUpdate";
+    }
 }

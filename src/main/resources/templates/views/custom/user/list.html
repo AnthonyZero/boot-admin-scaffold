@@ -124,31 +124,16 @@
             var data = obj.data, //每行数据
                 layEvent = obj.event;  //定义的事件名称
             if (layEvent === 'detail') {
+                //查看详情
                 febs.navigate("/custom/detail/" + data.customId)
             }
-            if (layEvent === 'del') {
-                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
-                    deleteUsers(data.userId);
+            /*if (layEvent === 'del') {
+                febs.modal.confirm('删除客户', '确定删除该客户？', function () {
+                    deleteUsers(data.customId);
                 });
-            }
+            }*/
             if (layEvent === 'edit') {
-                febs.modal.open('修改用户', 'system/user/update/' + data.username, {
-                    area: $(window).width() <= 750 ? '90%' : '50%',
-                    btn: ['提交', '取消'],
-                    yes: function (index, layero) {
-                        $('#user-update').find('#submit').trigger('click');
-                    },
-                    btn2: function () {
-                        layer.closeAll();
-                    }
-                });
-            }
-            if (layEvent === 'reset') {
-                var usernames = [];
-                usernames.push(data.username);
-                febs.post(ctx + 'user/password/reset/' + usernames.join(','), null, function () {
-                    febs.alert.success('所选用户密码已重置为123456');
-                });
+                febs.navigate("/custom/update/" + data.customId)
             }
         });
 
