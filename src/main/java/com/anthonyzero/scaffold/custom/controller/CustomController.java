@@ -1,6 +1,7 @@
 package com.anthonyzero.scaffold.custom.controller;
 
 
+import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
@@ -45,6 +46,7 @@ public class CustomController extends BaseController {
      * @param custom
      * @return
      */
+    @SysLog("添加客户信息")
     @PostMapping("add")
     @RequiresPermissions("custom:add")
     public Response addCustom(Custom custom) {
@@ -55,6 +57,25 @@ public class CustomController extends BaseController {
             return Response.error(CodeMsgEnum.PARAMETER_NOTEXIST);
         }
         customService.createCustom(custom);
+        return Response.success();
+    }
+
+    /**
+     * 修改客户信息
+     * @param custom
+     * @return
+     */
+    @SysLog("修改客户信息")
+    @PostMapping("update")
+    @RequiresPermissions("custom:update")
+    public Response updateCustom(Custom custom) {
+        if (custom.getCustomId() == null) {
+            return Response.error(CodeMsgEnum.PARAMETER_ERROR);
+        }
+        if (StringUtils.isBlank(custom.getFullname()) || StringUtils.isBlank(custom.getIdCard()) || StringUtils.isBlank(custom.getDemandTypeStr())) {
+            return Response.error(CodeMsgEnum.PARAMETER_NOTEXIST);
+        }
+        customService.updateCustom(custom);
         return Response.success();
     }
 }

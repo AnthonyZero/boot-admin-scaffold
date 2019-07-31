@@ -10,6 +10,7 @@ import com.anthonyzero.scaffold.custom.mapper.CustomMapper;
 import com.anthonyzero.scaffold.custom.mapper.DemandTypeMapper;
 import com.anthonyzero.scaffold.custom.service.CustomService;
 import com.anthonyzero.scaffold.system.entity.User;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -50,6 +51,24 @@ public class CustomServiceImpl extends ServiceImpl<CustomMapper, Custom> impleme
         custom.setCreateUserId(current.getUserId());
         custom.setCreateTime(LocalDateTime.now());
         baseMapper.insert(custom);
+        Arrays.asList(demand).forEach(demandType -> {
+            DemandType type = new DemandType();
+            type.setCustomId(custom.getCustomId());
+            type.setDemandType(Integer.valueOf(demandType));
+            type.setDemandTypeName(DemandType.demantTypeMap.get(type.getDemandType()));
+            demandTypeMapper.insert(type);
+        });
+    }
+
+    @Override
+    @Transactional
+    public void updateCustom(Custom custom) {
+        String[] demand = custom.getDemandTypeStr().split(",");
+        User current = (User) SecurityUtils.getSubject().getPrincipal();
+        demandTypeMapper.delete(new LambdaQueryWrapper<DemandType>().eq(DemandType::getCustomId, custom.getCustomId()));
+        custom.setModifyTime(LocalDateTime.now());
+        custom.setModifyUserId(current.getUserId());
+        baseMapper.updateById(custom);
         Arrays.asList(demand).forEach(demandType -> {
             DemandType type = new DemandType();
             type.setCustomId(custom.getCustomId());

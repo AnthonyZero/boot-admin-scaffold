@@ -10,7 +10,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label febs-form-item-require">姓名：</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="fullname" minlength="4" maxlength="20" lay-verify="range"
+                                        <input type="text" name="fullname" minlength="2" maxlength="20" lay-verify="range"
                                                autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
@@ -605,7 +605,7 @@
                                 </div>
                             </div>
 
-                            <div class="layui-col-md3">
+                            <div class="layui-col-md6">
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
                                         <button class="layui-btn" lay-submit lay-filter="custom-form-btn">保存提交</button>
@@ -791,10 +791,11 @@
                 febs.modal.confirm('添加客户成功','是否继续添加？',function () {
                     febs.view.tab.refresh();
                 }, function () {
-                    var currentUrl = window.location.hash.replace('#', '');
-                    febs.view.tab.del(currentUrl); //关闭当前Tab页，并跳转到列表页
+                    // var currentUrl = window.location.hash.replace('#', '');
+                    // febs.view.tab.del(currentUrl); //关闭当前Tab页，并跳转到列表页
                     /*febs.view.tab.change("/custom/user");*/
                     febs.navigate("/custom/user"); //如果关闭会刷新
+                    window.location.reload();
                 })
             });
 

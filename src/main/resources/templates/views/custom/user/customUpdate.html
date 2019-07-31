@@ -10,7 +10,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label febs-form-item-require">姓名：</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="fullname" minlength="4" maxlength="20" lay-verify="range"
+                                        <input type="text" name="fullname" minlength="2" maxlength="20" lay-verify="range"
                                                autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label febs-form-item-require">需求项：</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" name="demandType" value="1" title="社保挂靠" checked>
+                                    <input type="checkbox" name="demandType" value="1" title="社保挂靠">
                                     <input type="checkbox" name="demandType" value="2" title="社保补缴">
                                     <input type="checkbox" name="demandType" value="3" title="失业保险代办">
                                     <input type="checkbox" name="demandType" value="4" title="生育保险代办">
@@ -605,7 +605,7 @@
                                 </div>
                             </div>
 
-                            <div class="layui-col-md3">
+                            <div class="layui-col-md6">
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
                                         <button class="layui-btn" lay-submit lay-filter="custom-form-btn">保存提交</button>
@@ -744,6 +744,7 @@
 
 
         form.on('submit(custom-form-btn)', function (data) {
+            data.field.customId = custom.customId;
             var checkboxValue="";
             $("input:checkbox[name='demandType']:checked").each(function() { // 遍历name=demandType的多选框
                 if(checkboxValue==0){
@@ -811,14 +812,12 @@
                 ,isInitValue: true
             });*/
             febs.post(ctx + 'custom/update', data.field, function () {  //不管post 还是get 只出了成功情况 失败情况统一处理了：详情见febs.js 统一处理响应
-                febs.modal.confirm('修改客户成功','是否继续？',function () {
-                    febs.view.tab.refresh();
-                }, function () {
-                    var currentUrl = window.location.hash.replace('#', '');
-                    febs.view.tab.del(currentUrl); //关闭当前Tab页，并跳转到列表页
-                    /*febs.view.tab.change("/custom/user");*/
-                    febs.navigate("/custom/user"); //如果关闭会刷新
-                })
+                febs.modal.success('成功','修改客户信息成功', function () {
+                    // var currentUrl = window.location.hash.replace('#', '');
+                    // febs.view.tab.del(currentUrl);
+                    febs.navigate("/custom/detail/"+ custom.customId);
+                    window.location.reload();
+                });
             });
 
             return false;

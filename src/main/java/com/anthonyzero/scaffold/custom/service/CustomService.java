@@ -29,4 +29,10 @@ public interface CustomService extends IService<Custom> {
      * @param custom
      */
     void createCustom(Custom custom);
+
+    /**
+     * 修改客户信息
+     * @param custom
+     */
+    void updateCustom(Custom custom);
 }
