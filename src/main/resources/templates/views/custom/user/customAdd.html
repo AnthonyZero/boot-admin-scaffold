@@ -593,10 +593,13 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">销售人员：</label>
                                     <div class="layui-input-block">
-                                        <select name="saleUserId" lay-verify="required" lay-search>
-                                            <option value="1">layer</option>
-                                            <option value="2">form</option>
-                                            <option value="3">layim</option>
+                                        <select name="saleUserId"
+                                                lay-verify="required"
+                                                xm-select-direction="up"
+                                                xm-select-search=""
+                                                xm-select="sale-user-add"
+                                                xm-select-skin="default"
+                                                xm-select-radio>
                                         </select>
                                     </div>
                                 </div>
@@ -619,18 +622,50 @@
 </div>
 
 <script>
-    layui.use(['febs', 'form', 'validate', 'laydate'], function (febs, form) {
+    layui.use(['febs', 'form', 'validate', 'laydate', 'formSelects'], function (febs, form) {
         var $ = layui.$,
             febs = layui.febs,
             validate = layui.validate,
             laydate = layui.laydate,
             form = layui.form,
+            user = currentUser,
+            formSelects = layui.formSelects,
             $view = $('#custom-add-page'), //当前页面
             $customForm = $view.find('form');
 
         form.verify(validate); //自定义验证 比如range username等
         form.render();
+        formSelects.render();
 
+
+        formSelects.config('sale-user-add', {
+            searchUrl: ctx + 'user/selectValidUser',
+            response: {
+                statusCode: 0
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].nickname,
+                        value: data[i].userId
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                /*console.log(formSelects.value('sale-user-add')); //获取选中的对象数组新
+                console.log(formSelects.value('sale-user-add', 'val'));  //选中的value 数组
+                console.log(formSelects.value('sale-user-add', 'name'));  //选中的name 数组*/
+                var userId = currentUser.userId + "";
+                formSelects.value('sale-user-add', userId.split(",")); //必须字符串数组
+            },
+            error: function (id, url, searchVal, err) {
+                febs.alert.error('获取用户列表失败');
+            }
+        });
 
         laydate.render({
             elem: '#birthday',

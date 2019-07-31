@@ -4,11 +4,14 @@ import com.anthonyzero.scaffold.common.annotation.SysLog;
 import com.anthonyzero.scaffold.common.core.BaseController;
 import com.anthonyzero.scaffold.common.core.RequestQuery;
 import com.anthonyzero.scaffold.common.core.Response;
+import com.anthonyzero.scaffold.common.core.SysConstant;
 import com.anthonyzero.scaffold.common.enums.CodeMsgEnum;
 import com.anthonyzero.scaffold.common.exception.GlobalException;
 import com.anthonyzero.scaffold.common.utils.MD5Util;
 import com.anthonyzero.scaffold.system.entity.User;
 import com.anthonyzero.scaffold.system.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -172,5 +176,21 @@ public class UserController extends BaseController {
         String[] ids = userIds.split(StringPool.COMMA);
         this.userService.deleteUsers(ids);
         return Response.success();
+    }
+
+
+    /**
+     * 获取有效用户
+     * @param keyword
+     * @return
+     */
+    @GetMapping("selectValidUser")
+    public Response selectValidUser(String keyword) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getStatus, SysConstant.STATUS_VALID);
+        if (StringUtils.isNotBlank(keyword)) {
+            queryWrapper.like(User::getNickname, keyword);
+        }
+        List<User> users = userService.list(queryWrapper);
+        return Response.success(users);
     }
 }
