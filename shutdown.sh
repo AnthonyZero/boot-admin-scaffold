@@ -1,0 +1,1 @@
+pkill -f admin-scaffold-1.0.jar
