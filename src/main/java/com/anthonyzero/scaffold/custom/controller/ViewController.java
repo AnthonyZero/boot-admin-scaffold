@@ -64,6 +64,7 @@ public class ViewController extends BaseController {
         modelMap.addAttribute("custom", custom);
         modelMap.addAttribute("demandTypeList", list.stream().map(DemandType::getDemandType).collect(Collectors.toList()));
         modelMap.addAttribute("saleUserName", userService.getById(custom.getSaleUserId()).getNickname());
+        modelMap.addAttribute("receiverName", userService.getById(custom.getReceiver()).getNickname());
         return SysConstant.VIEW_PREFIX + "custom/user/customDetail";
     }
 

@@ -159,6 +159,37 @@ public class Custom implements Serializable {
     private LocalDate socailRelyContractEndDate;
 
     /**
+     * 制卡费
+     */
+    @TableField("socail_card_feed")
+    private BigDecimal socailCardFeed;
+
+
+    /**
+     * 社保挂靠 个人所得税
+     */
+    @TableField("socail_income_tax")
+    private BigDecimal socailIncomeTax;
+
+    /**
+     * 社保当年缴费 社保费
+     */
+    @TableField("socail_year_rely_pay")
+    private BigDecimal socailYearRelyPay;
+
+    /**
+     * 社保当年缴费 补缴多少月
+     */
+    @TableField("socail_year_fill_month")
+    private Integer socailYearFillMonth;
+
+    /**
+     * 社保当年补缴 补缴总费用
+     */
+    @TableField("socail_year_total_cost")
+    private BigDecimal socailYearTotalCost;
+
+    /**
      * 社保补缴 服务费
      */
     @TableField("socail_patch_service_pay")
@@ -399,6 +430,12 @@ public class Custom implements Serializable {
     private LocalDate fundRelyContractEndDate;
 
     /**
+     * 公积金挂靠 个人所得税
+     */
+    @TableField("fund_rely_income_tax")
+    private BigDecimal fundRelyIncomeTax;
+
+    /**
      * 公积金补缴 服务费
      */
     @TableField("fund_patch_service_pay")
@@ -449,10 +486,22 @@ public class Custom implements Serializable {
     private String fundPatchOtherDesc;
 
     /**
+     * 公积金补缴 个人所得税
+     */
+    @TableField("fund_patch_income_tax")
+    private BigDecimal fundPatchIncomeTax;
+
+    /**
      * 销售人 所属人
      */
     @TableField("sale_user_id")
     private Long saleUserId;
+
+    /**
+     * 接待人
+     */
+    @TableField("receiver")
+    private Long receiver;
 
     /**
      * 创建时间

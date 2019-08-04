@@ -211,6 +211,56 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">制卡费：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailCardFeed" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">个人所得税：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailIncomeTax" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">补缴当年社保：</div>
+                    <div class="layui-card-body">
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保费/资料费/服务费（元/月）：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailYearRelyPay" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">一次性补缴月（/月）：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailYearFillMonth" lay-verify="number" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">社保当年总费用：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="socailYearTotalCost" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -521,6 +571,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="layui-row layui-col-space20">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">个人所得税：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundRelyIncomeTax" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -578,7 +638,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md4">
+                            <div class="layui-col-md3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">个人所得税：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="fundPatchIncomeTax" lay-verify="decimal" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">公积金代办其他补充说明：</label>
                                     <div class="layui-input-block">
@@ -589,7 +657,7 @@
                         </div>
 
                         <div class="layui-row layui-col-space20">
-                            <div class="layui-col-md3" shiro:hasPermission="custom:setupSaleUser">
+                            <div class="layui-col-md4" shiro:hasPermission="custom:setupSaleUser">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">销售人员：</label>
                                     <div class="layui-input-block">
@@ -605,7 +673,23 @@
                                 </div>
                             </div>
 
-                            <div class="layui-col-md6">
+                            <div class="layui-col-md4" shiro:hasPermission="custom:setupSaleUser">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">接待人员：</label>
+                                    <div class="layui-input-block">
+                                        <select name="receiver"
+                                                lay-verify="required"
+                                                xm-select-direction="up"
+                                                xm-select-search=""
+                                                xm-select="receiver-update"
+                                                xm-select-skin="default"
+                                                xm-select-radio>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-col-md4">
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
                                         <button class="layui-btn" lay-submit lay-filter="custom-form-update">保存提交</button>
@@ -757,6 +841,32 @@
                 febs.alert.error('获取用户列表失败');
             }
         });
+
+        formSelects.config('receiver-update', {
+            searchUrl: ctx + 'user/selectValidUser',
+            response: {
+                statusCode: 0
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].nickname,
+                        value: data[i].userId
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
+            success: function () {
+                var receiver = custom.receiver + "";
+                formSelects.value('receiver-update', receiver.split(",")); //必须字符串数组
+            },
+            error: function (id, url, searchVal, err) {
+            }
+        });
+
 
 
         form.on('submit(custom-form-update)', function (data) {
