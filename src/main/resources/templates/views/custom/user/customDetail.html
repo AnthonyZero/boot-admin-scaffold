@@ -624,14 +624,30 @@
 
         function initCustomDetail() {
             custom.saleUserName = saleUserName;
-            custom.socailRelyContractDate = custom.socailRelyContractStartDate + " - " + custom.socailRelyContractEndDate;
-            custom.socailPatchTime = custom.socailPatchStartTime + " - " + custom.socailPatchEndTime;
-            custom.socailPatchContractDate = custom.socailPatchContractStartDate + " - " + custom.socailPatchContractEndDate;
-            custom.unemployedContractDate = custom.unemployedContractStartDate + " - " + custom.unemployedContractEndDate;
-            custom.birthContractDate = custom.birthContractStartDate + " - " + custom.birthContractEndDate;
-            custom.jobContractDate = custom.jobContractStartDate + " - " + custom.jobContractEndDate;
-            custom.fundRelyContractDate = custom.fundRelyContractStartDate + " - " + custom.fundRelyContractEndDate;
-            custom.fundPatchContractDate = custom.fundPatchContractStartDate + " - " + custom.fundPatchContractEndDate;
+            if (custom.socailRelyContractStartDate) {
+                custom.socailRelyContractDate = custom.socailRelyContractStartDate + " - " + custom.socailRelyContractEndDate;
+            }
+            if (custom.socailPatchStartTime) {
+                custom.socailPatchTime = custom.socailPatchStartTime + " - " + custom.socailPatchEndTime;
+            }
+            if (custom.socailPatchContractStartDate) {
+                custom.socailPatchContractDate = custom.socailPatchContractStartDate + " - " + custom.socailPatchContractEndDate;
+            }
+            if (custom.unemployedContractStartDate) {
+                custom.unemployedContractDate = custom.unemployedContractStartDate + " - " + custom.unemployedContractEndDate;
+            }
+            if (custom.birthContractStartDate) {
+                custom.birthContractDate = custom.birthContractStartDate + " - " + custom.birthContractEndDate;
+            }
+            if (custom.jobContractStartDate) {
+                custom.jobContractDate = custom.jobContractStartDate + " - " + custom.jobContractEndDate;
+            }
+            if (custom.fundRelyContractStartDate) {
+                custom.fundRelyContractDate = custom.fundRelyContractStartDate + " - " + custom.fundRelyContractEndDate;
+            }
+            if (custom.fundPatchContractStartDate) {
+                custom.fundPatchContractDate = custom.fundPatchContractStartDate + " - " + custom.fundPatchContractEndDate;
+            }
             form.val("custom-detail-form", custom);
 
             //对复选框单独赋值
