@@ -6,8 +6,10 @@ import com.anthonyzero.scaffold.custom.entity.Custom;
 import com.anthonyzero.scaffold.custom.entity.DemandType;
 import com.anthonyzero.scaffold.custom.service.CustomService;
 import com.anthonyzero.scaffold.custom.service.DemandTypeService;
+import com.anthonyzero.scaffold.system.entity.User;
 import com.anthonyzero.scaffold.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,10 @@ public class ViewController extends BaseController {
      */
     @RequestMapping(SysConstant.VIEW_PREFIX + "custom/user")
     @RequiresPermissions("custom:view")
-    public String pageCustomIndex() {
+    public String pageCustomIndex(ModelMap modelMap) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getStatus, SysConstant.STATUS_VALID);
+        List<User> users = userService.list(queryWrapper);
+        modelMap.addAttribute("users", users);
         return SysConstant.VIEW_PREFIX + "custom/user/list";
     }
 

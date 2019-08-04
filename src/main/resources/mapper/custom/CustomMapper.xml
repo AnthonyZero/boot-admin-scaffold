@@ -10,6 +10,7 @@
             (select GROUP_CONCAT(demand_type_name) FROM custom_demand_type WHERE custom_id = a.custom_id) as demandTypeName,
             a.sale_user_id as saleUserId,
             c.nickname as saleName,
+            d.nickname as receiverName,
             a.`status` as status,
             a.create_time as createTime,
             a.modify_time as modifyTime,
@@ -17,17 +18,24 @@
         FROM
         custom a
         JOIN custom_demand_type b ON a.custom_id = b.custom_id
-        join user c on a.sale_user_id = c.user_id
+        left join user c on a.sale_user_id = c.user_id
+        left join user d on a.receiver = d.user_id
 
         WHERE 1 = 1
-        <if test="custom.saleName != null and custom.saleName != ''">
-            AND c.nickname like CONCAT('%',#{custom.saleName},'%')
+        <if test="custom.fullname != null and custom.fullname != ''">
+            AND a.fullname like CONCAT('%',#{custom.fullname},'%')
+        </if>
+        <if test="custom.phone != null and custom.phone != ''">
+            AND a.phone like CONCAT('%',#{custom.phone},'%')
         </if>
         <if test="custom.status != null">
             and a.`status` = #{custom.status}
         </if>
-        <if test="custom.demandType != null and custom.demandType != ''">
-            and b.demand_type = #{custom.demandType}
+        <if test="custom.saleUserId != null">
+            and a.saleUserId = #{custom.saleUserId}
+        </if>
+        <if test="custom.receiver != null">
+            and a.receiver = #{custom.receiver}
         </if>
         <if test="custom.createTimeFrom != null and custom.createTimeFrom !=''">
             And a.create_time &gt;= #{custom.createTimeFrom}

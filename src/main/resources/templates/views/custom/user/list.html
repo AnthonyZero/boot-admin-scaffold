@@ -16,7 +16,19 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">销售人员</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="saleName" autocomplete="off" class="layui-input">
+                                            <select name="saleUserId">
+                                                <option value=""></option>
+                                                <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.nickname}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">接待人员</label>
+                                        <div class="layui-input-inline">
+                                            <select name="receiver">
+                                                <option value=""></option>
+                                                <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.nickname}"></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -32,22 +44,34 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">需求类型</label>
+                                        <label class="layui-form-label layui-form-label-sm">客户姓名</label>
                                         <div class="layui-input-inline">
-                                            <select name="demandType">
-                                                <option value=""></option>
-                                                <option value="1">社保挂靠</option>
-                                                <option value="2">社保补缴</option>
-                                                <option value="3">失业保险代办</option>
-                                                <option value="4">生育保险代办</option>
-                                                <option value="5">养老保险代办</option>
-                                                <option value="6">工伤保险代办</option>
-                                                <option value="7">公积金挂靠</option>
-                                                <option value="8">公积金补缴</option>
-                                                <option value="9">集体落户</option>
-                                            </select>
+                                            <input type="text" name="fullname"  class="layui-input">
                                         </div>
                                     </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">客户手机</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="phone" class="layui-input">
+                                        </div>
+                                    </div>
+<!--                                    <div class="layui-inline">-->
+<!--                                        <label class="layui-form-label layui-form-label-sm">需求类型</label>-->
+<!--                                        <div class="layui-input-inline">-->
+<!--                                            <select name="demandType">-->
+<!--                                                <option value=""></option>-->
+<!--                                                <option value="1">社保挂靠</option>-->
+<!--                                                <option value="2">社保补缴</option>-->
+<!--                                                <option value="3">失业保险代办</option>-->
+<!--                                                <option value="4">生育保险代办</option>-->
+<!--                                                <option value="5">养老保险代办</option>-->
+<!--                                                <option value="6">工伤保险代办</option>-->
+<!--                                                <option value="7">公积金挂靠</option>-->
+<!--                                                <option value="8">公积金补缴</option>-->
+<!--                                                <option value="9">集体落户</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
@@ -202,6 +226,7 @@
                     {field: 'fullname', title: '姓名', minWidth: 100},
                     {field: 'phone', title: '联系电话', minWidth: 165},
                     {field: 'demandTypeName', title: '需求类型', minWidth: 230},
+                    {field: 'receiverName', title: '接待人姓名', minWidth: 130},
                     {field: 'saleName', title: '销售人员', minWidth: 120},
                     {title: '跟进状态', templet: '#custom-status'}, //templet js脚本转换 翻译
                     {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
@@ -224,9 +249,11 @@
             return {
                 createTimeFrom: createTimeFrom, //开始时间begine
                 createTimeTo: createTimeTo,  //结束时间end
-                saleName: $searchForm.find('input[name="saleName"]').val().trim(),
+                fullname: $searchForm.find('input[name="fullname"]').val().trim(),
+                phone: $searchForm.find('input[name="phone"]').val().trim(),
                 status: $searchForm.find("select[name='status']").val(),
-                demandType: $searchForm.find("select[name='demandType']").val(),
+                saleUserId: $searchForm.find("select[name='saleUserId']").val(),
+                receiver: $searchForm.find("select[name='receiver']").val(),
                 invalidate_ie_cache: new Date()
             };
         }

@@ -37,6 +37,17 @@ public class CustomController extends BaseController {
     @GetMapping("page")
     @RequiresPermissions("custom:view")
     public Response customList(CustomInfo customInfo, RequestQuery request) {
+        String roleId = getCurrentUser().getRoleId();
+        if (StringUtils.isBlank(roleId)) {
+            customInfo.setSaleUserId(getUserId()); //没有角色 只能看自己的
+        } else {
+            if (roleId.contains("1")) {
+                //有超级管理员角色
+            } else {
+                //普通角色
+                customInfo.setSaleUserId(getUserId());
+            }
+        }
         Map<String, Object> dataTable = getDataTable(customService.pageCustom(customInfo, request));
         return Response.success(dataTable);
     }

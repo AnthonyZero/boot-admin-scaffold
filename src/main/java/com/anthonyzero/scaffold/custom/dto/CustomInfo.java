@@ -18,6 +18,8 @@ public class CustomInfo implements Serializable {
     private String demandTypeName;
     private Long saleUserId;
     private String saleName;
+    private Long receiver;
+    private String receiverName;
     private Integer status;
     private LocalDateTime createTime;
     private String createTimeFrom;
