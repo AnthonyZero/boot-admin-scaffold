@@ -167,7 +167,7 @@ CREATE TABLE `user`  (
   `modify_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '最近登录时间',
   PRIMARY KEY (`user_id`) USING BTREE,
-  INDEX `username`(`username`) USING BTREE
+  UNIQUE KEY `username` (`username`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
