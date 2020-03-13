@@ -58,6 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional
     public void updateUser(User user) {
+        String username = user.getUsername();
         user.setUsername(null); //为空的不修改
         user.setModifyTime(LocalDateTime.now());
         updateById(user);
@@ -67,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         setUserRoles(user, roles);
 
         User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
-        if (StringUtils.equalsIgnoreCase(currentUser.getUsername(), user.getUsername())) {
+        if (StringUtils.equalsIgnoreCase(currentUser.getUsername(), username)) {
             shiroRealm.clearCache();
         }
 
