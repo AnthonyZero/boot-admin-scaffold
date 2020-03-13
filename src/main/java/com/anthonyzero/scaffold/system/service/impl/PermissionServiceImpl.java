@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -43,7 +46,11 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public MenuTree<Permission> findUserMenus(String username) {
         List<Permission> menus = this.baseMapper.findUserMenus(username);
-        List<MenuTree<Permission>> trees = this.convertMenus(menus);
+        //去重 并排序
+        List<Permission> list = menus.stream().collect(Collectors.collectingAndThen(
+                Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o-> o.getPermissionId()))), ArrayList::new))
+                .stream().sorted(Comparator.comparing(Permission::getOrderNum)).collect(Collectors.toList());
+        List<MenuTree<Permission>> trees = this.convertMenus(list);
         return TreeUtil.buildMenuTree(trees);
     }
 
