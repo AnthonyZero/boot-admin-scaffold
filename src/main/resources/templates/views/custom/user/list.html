@@ -16,7 +16,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">销售人员</label>
                                         <div class="layui-input-inline">
-                                            <select name="saleUserId">
+                                            <select name="saleUserId"  lay-search="">
                                                 <option value=""></option>
                                                 <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.nickname}"></option>
                                             </select>
@@ -25,7 +25,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">接待人员</label>
                                         <div class="layui-input-inline">
-                                            <select name="receiver">
+                                            <select name="receiver" lay-search="">
                                                 <option value=""></option>
                                                 <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.nickname}"></option>
                                             </select>

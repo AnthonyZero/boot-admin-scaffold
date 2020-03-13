@@ -32,7 +32,7 @@
             and a.`status` = #{custom.status}
         </if>
         <if test="custom.saleUserId != null">
-            and a.saleUserId = #{custom.saleUserId}
+            and a.sale_user_id = #{custom.saleUserId}
         </if>
         <if test="custom.receiver != null">
             and a.receiver = #{custom.receiver}
