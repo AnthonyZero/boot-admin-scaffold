@@ -21,4 +21,12 @@ public interface RolePermissionService extends IService<RolePermission> {
      * @param roleIds 角色 id
      */
     void deleteRolePermsByRoleId(List<String> roleIds);
+
+
+    /**
+     * 通过权限id 删除
+     *
+     * @param permIds 权限 id
+     */
+    void deleteRolePermsByPermId(List<String> permIds);
 }

@@ -13,16 +13,4 @@
     <sql id="Base_Column_List">
         role_permission_id, role_id, permission_id
     </sql>
-
-    <!-- 递归删除用户权限，findPermsChildren为自定义的 MySQL函数，作用为根据当前 权限ID递归查找出其所有下级权限ID包括自己-->
-    <select id="deleteRolePermissions" parameterType="string">
-        DELETE from role_permission
-        WHERE permission_id in
-        (
-            SELECT t.permission_id FROM
-            (
-              SELECT permission_id FROM permission WHERE FIND_IN_SET( permission_id, findPermsChildren ( #{permissionId} ) ) > 0
-            ) t
-        )
-    </select>
 </mapper>

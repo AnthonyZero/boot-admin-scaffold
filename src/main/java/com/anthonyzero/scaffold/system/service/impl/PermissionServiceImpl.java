@@ -5,20 +5,19 @@ import com.anthonyzero.scaffold.common.core.MenuTree;
 import com.anthonyzero.scaffold.common.utils.TreeUtil;
 import com.anthonyzero.scaffold.system.entity.Permission;
 import com.anthonyzero.scaffold.system.mapper.PermissionMapper;
-import com.anthonyzero.scaffold.system.mapper.RolePermissionMapper;
 import com.anthonyzero.scaffold.system.service.PermissionService;
+import com.anthonyzero.scaffold.system.service.RolePermissionService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
 
     @Autowired
-    private RolePermissionMapper rolePermissionMapper;
+    private RolePermissionService rolePermissionService;
 
     @Autowired
     private ShiroRealm shiroRealm;
@@ -70,12 +69,8 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     @Transactional
     public void deletePermissions(String permissionIds) {
-        String[] permissionIdsArray = permissionIds.split(StringPool.COMMA);
-        for (String permissionId : permissionIdsArray) {
-            // 递归删除这些菜单/按钮
-            baseMapper.deletePermissions(permissionId);
-            rolePermissionMapper.deleteRolePermissions(permissionId);
-        }
+        String[] permsIds = permissionIds.split(StringPool.COMMA);
+        this.delete(Arrays.asList(permsIds));
 
         shiroRealm.clearCache();
     }
@@ -93,5 +88,27 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             trees.add(tree);
         });
         return trees;
+    }
+
+    //递归删除 菜单 以及角色菜单 信息
+    private void delete(List<String> permsIds) {
+        List<String> list = new ArrayList<>(permsIds);
+        removeByIds(permsIds);
+
+        //查询删除的菜单中 是否存在子孩子
+        LambdaQueryWrapper<Permission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Permission::getParentId, permsIds);
+        List<Permission> perm = baseMapper.selectList(queryWrapper);
+
+        if (CollectionUtils.isNotEmpty(perm)) {
+            List<String> permIdList = new ArrayList<>();
+            perm.forEach(m -> permIdList.add(String.valueOf(m.getPermissionId())));
+            list.addAll(permIdList);
+            this.rolePermissionService.deleteRolePermsByPermId(list);
+            //递归删除 子孩子
+            this.delete(permIdList);
+        } else {
+            this.rolePermissionService.deleteRolePermsByPermId(list);
+        }
     }
 }

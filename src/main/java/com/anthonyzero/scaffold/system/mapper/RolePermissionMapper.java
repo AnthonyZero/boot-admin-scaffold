@@ -13,11 +13,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
-
-    /**
-     * 递归删除用户角色 权限
-     *
-     * @param permissionId permissionId 权限ID
-     */
-    void deleteRolePermissions(String permissionId);
 }

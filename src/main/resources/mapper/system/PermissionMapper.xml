@@ -53,16 +53,4 @@
         ORDER BY
             p.order_num
     </select>
-
-    <!-- 递归删除权限，findPermsChildren为自定义的 MySQL函数，作用为根据当前 权限ID递归查找出其所有下级权限ID包括自己-->
-    <delete id="deletePermissions" parameterType="string">
-        DELETE from permission
-        WHERE permission_id in
-        (
-            SELECT t.permission_id FROM
-            (
-              SELECT permission_id FROM permission WHERE FIND_IN_SET( permission_id, findPermsChildren ( #{permissionId} ) ) > 0
-            ) t
-        )
-    </delete>
 </mapper>
